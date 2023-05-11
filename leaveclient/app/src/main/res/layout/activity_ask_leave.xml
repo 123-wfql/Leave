@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AskLeaveActivity">
+
+    <include layout="@layout/title" />
+
+
+    <ScrollView
+        android:id="@+id/sl_askleave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/ll_askleave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_userid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_userid"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="end"
+                    android:text="学        号："/>
+
+                <EditText
+                    android:id="@+id/et_askleave_userid"
+                    style="@style/et_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="11"
+                    android:background="@drawable/btn_item_medium_default"
+                    android:ellipsize="end"
+                    android:inputType="number"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_username"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="end"
+                    android:text="姓        名："/>
+
+                <EditText
+                    android:id="@+id/et_askleave_username"
+                    style="@style/et_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="11"
+                    android:background="@drawable/btn_item_medium_default"
+                    android:ellipsize="end"
+                    android:inputType="textPersonName"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_userkind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_userkind"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="用户类型："/>
+
+                <EditText
+                    android:id="@+id/et_askleave_userkind"
+                    style="@style/et_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="11"
+                    android:background="@drawable/btn_item_medium_default"
+                    android:ellipsize="end"
+                    android:inputType="text"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_institution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_institution"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="所在学院："/>
+
+                <EditText
+                    android:id="@+id/et_askleave_institution"
+                    style="@style/et_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="11"
+                    android:background="@drawable/btn_item_medium_default"
+                    android:ellipsize="end"
+                    android:inputType="textPersonName"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_department"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_department"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="所在专业："/>
+
+                <EditText
+                    android:id="@+id/et_askleave_department"
+                    style="@style/et_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="11"
+                    android:background="@drawable/btn_item_medium_default"
+                    android:ellipsize="end"
+                    android:inputType="textPersonName"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_leavekind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_leavekind"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="请假类型："/>
+
+                <FrameLayout
+                    style="@style/et_normal"
+                    android:background="@drawable/spinner_default"
+                    android:layout_width="0dp"
+                    android:layout_weight="11" >
+
+                    <Spinner
+                        android:id="@+id/sp_askleave_leavekind"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"  />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_isurgent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_isurgent"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="是否紧急："/>
+
+                <CheckBox
+                    android:id="@+id/ck_askleave_isurgent"
+                    style="@style/et_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="11"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="紧急请假" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_leavereason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_leavereason"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="请假原因："/>
+
+                <EditText
+                    android:id="@+id/et_askleave_leavereason"
+                    style="@style/et_normal"
+                    android:layout_width="0dp"
+                    android:layout_height="96dp"
+                    android:layout_weight="11"
+                    android:background="@drawable/btn_item_medium_default"
+                    android:minLines="2"
+                    android:maxLines="5"
+                    android:ellipsize="end"
+                    android:inputType="textMultiLine"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_destination"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="目的地："/>
+
+                <EditText
+                    android:id="@+id/et_askleave_destination"
+                    style="@style/et_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="11"
+                    android:background="@drawable/btn_item_medium_default"
+                    android:ellipsize="end"
+                    android:inputType="text"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_startperiod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_startperiod"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="开始时间："/>
+
+                <LinearLayout
+                    android:layout_height="48dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="11"
+                    android:layout_margin="5dp">
+
+                    <Button
+                        android:id="@+id/btn_askleave_startdate"
+                        style="@style/et_normal"
+                        android:layout_margin="0dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="6"
+                        android:background="@drawable/btn_item_medium_default"
+                        android:drawableStart="@drawable/ic_calendar"
+                        android:drawablePadding="5dp"
+                        android:text="2023-4-1"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp" />
+
+                    <Button
+                        android:id="@+id/btn_askleave_starttime"
+                        style="@style/et_normal"
+                        android:layout_margin="0dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="5"
+                        android:background="@drawable/btn_item_medium_default"
+                        android:drawableStart="@drawable/ic_clock"
+                        android:drawablePadding="5dp"
+                        android:text="20:00:00"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_endperiod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_endperiod"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="结束时间："/>
+
+                <LinearLayout
+                    android:layout_height="48dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="11"
+                    android:layout_margin="5dp">
+
+                    <Button
+                        android:id="@+id/btn_askleave_enddate"
+                        style="@style/et_normal"
+                        android:layout_margin="0dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="6"
+                        android:background="@drawable/btn_item_medium_default"
+                        android:drawableStart="@drawable/ic_calendar"
+                        android:drawablePadding="5dp"
+                        android:text="2023-4-1"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp" />
+
+                    <Button
+                        android:id="@+id/btn_askleave_endtime"
+                        style="@style/et_normal"
+                        android:layout_margin="0dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="5"
+                        android:background="@drawable/btn_item_medium_default"
+                        android:drawableStart="@drawable/ic_clock"
+                        android:drawablePadding="5dp"
+                        android:text="20:00:00"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_contact"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="联系方式："/>
+
+                <EditText
+                    android:id="@+id/et_askleave_contact"
+                    style="@style/et_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="11"
+                    android:background="@drawable/btn_item_medium_default"
+                    android:ellipsize="end"
+                    android:inputType="text"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_checker1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_check1"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="一级审批人："/>
+
+                <FrameLayout
+                    style="@style/et_normal"
+                    android:background="@drawable/spinner_default"
+                    android:layout_width="0dp"
+                    android:layout_weight="11" >
+
+                    <Spinner
+                        android:id="@+id/sp_askleave_check1"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"  />
+
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_checker2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_check2"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="二级审批人："/>
+
+                <FrameLayout
+                    style="@style/et_normal"
+                    android:background="@drawable/spinner_default"
+                    android:layout_width="0dp"
+                    android:layout_weight="11" >
+
+                    <Spinner
+                        android:id="@+id/sp_askleave_check2"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"  />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_askleave_checker3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_askleave_check3"
+                    style="@style/text_normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="三级审批人："/>
+
+                <FrameLayout
+                    style="@style/et_normal"
+                    android:background="@drawable/spinner_default"
+                    android:layout_width="0dp"
+                    android:layout_weight="11" >
+
+                    <Spinner
+                        android:id="@+id/sp_askleave_check3"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"  />
+
+                </FrameLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btn_askleave_commit"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_margin="3dp"
+                    android:background="@color/bg_blue"
+                    android:enabled="false"
+                    android:text="确认提交"
+                    android:textColor="@color/text_white"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/btn_askleave_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_margin="3dp"
+                    android:background="@color/bg_gray"
+                    android:enabled="true"
+                    android:text="取消"
+                    android:textColor="@color/text_white"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

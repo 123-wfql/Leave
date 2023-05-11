@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:stretchColumns="1">
+
+
+
+
+    <TableRow>
+        <TextView
+            android:text="用户名："
+            android:id="@+id/tv_reg_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0000ff"
+            />
+
+        <EditText
+            android:text=""
+            android:id="@+id/userName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+    </TableRow>
+
+
+    <TableRow>
+        <TextView
+            android:text="密码："
+            android:id="@+id/tv_reg_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0000ff"
+            />
+
+        <EditText
+            android:text=""
+            android:id="@+id/pwd"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:password="true"/>
+
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:text="电话："
+            android:id="@+id/tv_reg_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0000ff"
+            />
+
+        <EditText
+            android:text=""
+            android:id="@+id/phone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:password="true"/>
+
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:text="所在学院："
+            android:id="@+id/tv_reg_academy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0000ff"
+            />
+
+        <EditText
+            android:text=""
+            android:id="@+id/address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+    </TableRow>
+
+    <TableRow
+        android:gravity="right">
+        <Button
+            android:text="确定"
+            android:id="@+id/registerButton1"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
+        <Button
+            android:text="重置"
+            android:id="@+id/registerButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </TableRow>
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
