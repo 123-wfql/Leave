@@ -172,21 +172,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void refreshLogin() {
-        //将最后一次的登录的用户账号显示在输入框
-        boolean isRemember = pref_login.getBoolean("isRemember", false);
-        String userid = pref_login.getString("userid", "");
-        String password = pref_login.getString("password", "");
-        ck_remember_pwd.setChecked(isRemember);
-        et_login_userid.setText(userid);
-        if (isRemember){
-            et_login_pwd.setText(password);
-        } else { }
-
         //重新加载输入框提示列表
         loginidArray = mLoginDao.queryLoginIdArrayList();
         loginidAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, loginidArray);
         et_login_userid.setAdapter(loginidAdapter);
         et_login_userid.setSelection(0);
+
+        //将最后一次的登录的用户账号显示在输入框
+        String userid = pref_login.getString("userid", "");
+        et_login_userid.setText(userid);
+
     }
 
     @Override
@@ -239,7 +234,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (mView.getId() == R.id.et_login_userid) {
                 if (str.length() == 0){ //未输入提示账户列表
                     btn_del_id.setVisibility(View.GONE);
-                    et_login_userid.showDropDown();
                 } else {
                     btn_del_id.setVisibility(View.VISIBLE);
                 }
@@ -252,10 +246,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             et_login_pwd.setText(mlogin.getLoginpwd());
                             ck_remember_pwd.setChecked(true);
                             btn_clear_login.setVisibility(View.VISIBLE);
+                            btn_del_pwd.setVisibility(View.GONE);
                         } else {
                             et_login_pwd.setText("");
                             ck_remember_pwd.setChecked(false);
                             btn_clear_login.setVisibility(View.VISIBLE);
+                            btn_del_pwd.setVisibility(View.GONE);
                         }
                     } else {
                         btn_clear_login.setVisibility(View.GONE);
@@ -356,8 +352,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void recordLogin() {
         SharedPreferences.Editor editor = pref_login.edit();
         editor.putString("userid", et_login_userid.getText().toString());
-        editor.putString("password", et_login_pwd.getText().toString());
-        editor.putBoolean("isRemember", ck_remember_pwd.isChecked());
         editor.commit();
 
         Login login = new Login();
