@@ -35,6 +35,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.client.dao.AdminDao;
 import com.client.dao.LoginDao;
 import com.client.entity.Login;
 import com.client.util.YNAlertDialogUtil;
@@ -63,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean isremember;
     private Button btn_clear_login;
     private ArrayAdapter<String> loginidAdapter;
+    private AdminDao adminDao;
 
 
     @Override
@@ -126,6 +128,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //使用共享参数存储最后登录的用户名
         pref_login = getSharedPreferences("share_login", Context.MODE_PRIVATE);
+
+        //获取数据库实例
+        adminDao = MyApplication.getInstance().getAdminDatabase().adminDao();
 
         //开启连接
         mLoginDao = LoginDao.getInstance(this);
