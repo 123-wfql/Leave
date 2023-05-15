@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.client.activity'
+    namespace 'com.wfql.client'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.client.activity"
+        applicationId "com.wfql.client"
         minSdk 28
         targetSdk 33
         versionCode 1

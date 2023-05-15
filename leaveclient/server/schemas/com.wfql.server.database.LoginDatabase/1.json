@@ -1,0 +1,46 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "92460df5c478fca3f35511fcd38da60e",
+    "entities": [
+      {
+        "tableName": "Login",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`loginId` TEXT NOT NULL, `loginPwd` TEXT, `remember` INTEGER NOT NULL, PRIMARY KEY(`loginId`))",
+        "fields": [
+          {
+            "fieldPath": "loginId",
+            "columnName": "loginId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "loginPwd",
+            "columnName": "loginPwd",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "remember",
+            "columnName": "remember",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "loginId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '92460df5c478fca3f35511fcd38da60e')"
+    ]
+  }
+}

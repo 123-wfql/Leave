@@ -2,8 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <queries>
+        <package android:name="com.wfql.server" />
+        <provider android:authorities="com.wfql.server.provider.LoginProvider" />
+    </queries>
+
     <application
-        android:name="com.wfql.activity.MyApplication"
+        android:name="com.wfql.client.activity.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,25 +18,25 @@
         android:theme="@style/Theme.Leaveclient"
         tools:targetApi="31">
         <activity
-            android:name="com.wfql.activity.CheckActivity"
+            android:name="com.wfql.client.activity.CheckActivity"
             android:exported="false" />
         <activity
-            android:name="com.wfql.activity.AskLeaveActivity"
+            android:name="com.wfql.client.activity.AskLeaveActivity"
             android:exported="false" />
         <activity
-            android:name="com.wfql.activity.AdmActivity"
+            android:name="com.wfql.client.activity.AdmActivity"
             android:exported="false" />
         <activity
-            android:name="com.wfql.activity.VerifyLoginActivity"
+            android:name="com.wfql.client.activity.VerifyLoginActivity"
             android:exported="false" />
         <activity
-            android:name="com.wfql.activity.ForgetPwdActivity"
+            android:name="com.wfql.client.activity.ForgetPwdActivity"
             android:exported="false" />
         <activity
-            android:name="com.wfql.activity.RegisterActivity"
+            android:name="com.wfql.client.activity.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name="com.wfql.activity.LoginActivity"
+            android:name="com.wfql.client.activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.wfql.activity.MainActivity"
+            android:name="com.wfql.client.activity.MainActivity"
             android:exported="true" />
     </application>
 
