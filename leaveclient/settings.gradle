@@ -13,4 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "leaveclient"
-include ':app'
+include ':client'
+include ':server'

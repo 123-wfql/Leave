@@ -1,0 +1,64 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "665cd5512db1f62819048554964c4db9",
+    "entities": [
+      {
+        "tableName": "Admin",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`admId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `admPwd` TEXT, `admName` TEXT, `admRemark` TEXT, `admGender` TEXT, `admContact` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "admId",
+            "columnName": "admId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "admPwd",
+            "columnName": "admPwd",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "admName",
+            "columnName": "admName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "admRemark",
+            "columnName": "admRemark",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "admGender",
+            "columnName": "admGender",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "admContact",
+            "columnName": "admContact",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "admId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '665cd5512db1f62819048554964c4db9')"
+    ]
+  }
+}
