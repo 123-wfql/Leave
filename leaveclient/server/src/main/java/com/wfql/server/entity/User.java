@@ -1,8 +1,13 @@
-package com.wfql.client.entity;
+package com.wfql.server.entity;
 
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
 public class User {
+    @PrimaryKey@NonNull
     private String userId;
     private String userPwd;
     private String userName;

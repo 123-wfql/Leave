@@ -1,4 +1,4 @@
-package com.wfql.client.dao;
+package com.wfql.client.daoNoNeed;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 
-import com.wfql.client.entity.Loginbak;
+import com.wfql.client.entity.LoginOfHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +69,7 @@ public class LoginDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public long insert(Loginbak login) {   //插入数据
+    public long insert(LoginOfHelper login) {   //插入数据
         ContentValues values = new ContentValues();
         values.put("loginid", login.getLoginId());
         values.put("loginpwd", login.getLoginPwd());
@@ -82,7 +82,7 @@ public class LoginDBHelper extends SQLiteOpenHelper {
         return mDB.delete(TABLENAME, "loginid=?", new String[]{loginid});
     }
 
-    public long update(Loginbak login) {   //修改记录
+    public long update(LoginOfHelper login) {   //修改记录
         ContentValues values = new ContentValues();
         values.put("loginid", login.getLoginId());
         values.put("loginpwd", login.getLoginPwd());
@@ -90,11 +90,11 @@ public class LoginDBHelper extends SQLiteOpenHelper {
         return mDB.update(TABLENAME, values, "loginid=?", new String[]{login.getLoginId()});
     }
 
-    public List<Loginbak> queryAll() {     //查询所有
-        List<Loginbak> list = new ArrayList<>();
+    public List<LoginOfHelper> queryAll() {     //查询所有
+        List<LoginOfHelper> list = new ArrayList<>();
         Cursor cursor = mDB.query(TABLENAME, null, null, null, null, null, null);
         while(cursor.moveToNext()){
-            Loginbak login = new Loginbak();
+            LoginOfHelper login = new LoginOfHelper();
             login.setLoginId(cursor.getString(0));
             login.setLoginPwd(cursor.getString(1));
             login.setRemember(cursor.getInt(2) == 1 );
@@ -113,12 +113,12 @@ public class LoginDBHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public Loginbak queryByLoginId(String loginid){    //通过账号查询
-        Loginbak mlogin = null;
-        List<Loginbak> list = new ArrayList<>();
+    public LoginOfHelper queryByLoginId(String loginid){    //通过账号查询
+        LoginOfHelper mlogin = null;
+        List<LoginOfHelper> list = new ArrayList<>();
         Cursor cursor = mDB.query(TABLENAME, null, "loginid=?", new String[]{loginid}, null, null, null);
         while(cursor.moveToNext()){
-            Loginbak login = new Loginbak();
+            LoginOfHelper login = new LoginOfHelper();
             login.setLoginId(cursor.getString(0));
             login.setLoginPwd(cursor.getString(1));
             login.setRemember(cursor.getInt(2) == 1 );

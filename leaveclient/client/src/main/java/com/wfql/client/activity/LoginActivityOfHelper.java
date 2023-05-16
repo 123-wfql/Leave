@@ -1,15 +1,6 @@
 package com.wfql.client.activity;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,15 +27,22 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+
 import com.wfql.client.R;
-import com.wfql.client.content.LoginContent;
+import com.wfql.client.daoNoNeed.LoginDBHelper;
 import com.wfql.client.daoNoNeed.LoginDaoOfRoom;
-import com.wfql.client.entity.Login;
+import com.wfql.client.entity.LoginOfHelper;
 import com.wfql.client.util.YNAlertDialogUtil;
 
 import java.util.List;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, View.OnFocusChangeListener, AdapterView.OnItemSelectedListener, View.OnTouchListener {
+public class LoginActivityOfHelper extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, View.OnFocusChangeListener, AdapterView.OnItemSelectedListener, View.OnTouchListener {
     private AutoCompleteTextView et_login_userid;
     private EditText et_login_pwd;
     private ImageButton btn_del_id;
@@ -64,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String loginPwd;
     private boolean remember;
     private List<String> loginidArray;
-    //private LoginDBHelper loginDBHelper;
+    private LoginDBHelper loginDBHelper;
     private ArrayAdapter<String> loginidAdapter;
     private SharedPreferences pref_login;
     private LoginDaoOfRoom loginDao;
@@ -127,12 +125,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         et_login_userid.addTextChangedListener(new CodeTextWatcher(et_login_userid, 11));
         et_login_pwd.addTextChangedListener(new CodeTextWatcher(et_login_pwd, 18));
 
-        //ItemSelected
-        //sp_userid.setOnItemSelectedListener(this);
+
 
         //使用共享参数存储最后登录的用户名
         pref_login = getSharedPreferences("share_login", Context.MODE_PRIVATE);
 
+        //获取数据库实例
+        loginDao = clientApplication.getInstance().getLoginDatabase().loginDao();
+
+        //开启连接
+        loginDBHelper = LoginDBHelper.getInstance(this);
+        loginDBHelper.openLink();
 
         //重新进入首页
         refreshLogin();
@@ -151,39 +154,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
+        loginDBHelper.openLink();
         refreshLogin();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        loginDBHelper.closeLink();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        loginDBHelper.openLink();
         refreshLogin();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        loginDBHelper.closeLink();
     }
 
-    @SuppressLint("Range")
     private void refreshLogin() {
         //重新加载输入框提示列表
-        //Cursor cursor = getContentResolver().query(LoginContent.CONTENT_URI, null, null, null, null);
-//        if (cursor != null){
-//            Log.d("wfql", "query is not null");
-//            cursor.moveToFirst();
-//            while (cursor.moveToNext()){
-//                loginidArray.add(cursor.getString(cursor.getColumnIndex("loginId")));
-//            }
-//            cursor.close();
-//        }
-//        loginidAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, loginidArray);
-//        et_login_userid.setAdapter(loginidAdapter);
+        loginidArray = loginDBHelper.queryLoginIdArrayList();
+        loginidAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, loginidArray);
+        et_login_userid.setAdapter(loginidAdapter);
+        et_login_userid.setSelection(0);
 
         //将最后一次的登录的用户账号显示在输入框
         String loginId1 = pref_login.getString("loginId", "");
@@ -244,9 +243,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     btn_del_id.setVisibility(View.VISIBLE);
                 }
-                Login mlogin = null;
+                LoginOfHelper mlogin = null;
                 try {   //根据账号查找并自动填入密码信息
-                    //mlogin = loginDao.queryByLoginId(loginId);
+                    loginDBHelper = LoginDBHelper.getInstance(LoginActivityOfHelper.this);
+                    mlogin = loginDBHelper.queryByLoginId(loginId);
                     if (mlogin != null) {
                         if (mlogin.isRemember()) {
                             et_login_pwd.setText(mlogin.getLoginPwd());
@@ -298,7 +298,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (TextUtils.isEmpty(phone) || phone.length() != 11 || phone.toCharArray()[0] != '1') { //错误的手机格式
                 et_login_userid.requestFocus();
                 btn_del_id.setVisibility(View.VISIBLE);
-                Toast.makeText(LoginActivity.this, "请输入手机号", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivityOfHelper.this, "请输入手机号", Toast.LENGTH_SHORT).show();
             } else {    //手机传入“忘记密码”界面
                 btn_del_id.setVisibility(View.GONE);
                 Intent intentForgetPwd = new Intent(this, ForgetPwdActivity.class);
@@ -316,7 +316,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (TextUtils.isEmpty(phone) || phone.length() != 11 || phone.toCharArray()[0] != '1') {
                 et_login_userid.requestFocus();
                 btn_del_id.setVisibility(View.VISIBLE);
-                Toast.makeText(LoginActivity.this, "请输入手机号", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivityOfHelper.this, "请输入手机号", Toast.LENGTH_SHORT).show();
             } else {
                 btn_del_id.setVisibility(View.GONE);
                 Intent intentVerifyLogin = new Intent(this, VerifyLoginActivity.class);
@@ -326,7 +326,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else if (id == R.id.btn_clear_login) {    //清除当前账号登录记录
             //登录列表的信息
             YNAlertDialogUtil dialogUtil = new YNAlertDialogUtil(this);
-            AlertDialog.Builder builder = dialogUtil.createBuilder(LoginActivity.this, "", "是否清除该条登录记录", "清除", "取消");
+            AlertDialog.Builder builder = dialogUtil.createBuilder(LoginActivityOfHelper.this, "", "是否清除该条登录记录", "清除", "取消");
             builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
@@ -361,17 +361,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.putString("loginId", et_login_userid.getText().toString());
         editor.commit();
 
-
-        //使用contentProvider传输数据
-        ContentValues values = new ContentValues();
-        values.put("loginId", loginId);
-        values.put("loginPwd", loginPwd);
-        values.put("remember", remember);
-        //int deleteColumn = getContentResolver().delete(LoginContent.CONTENT_URI, "loginId", new String[]{loginId});
-//        if (deleteColumn > 0){
-            getContentResolver().insert(LoginContent.CONTENT_URI, values);
-//        }
-
+        //Room框架下存数据操作
+        LoginOfHelper login = new LoginOfHelper();
+        login.setRemember(remember);
+        login.setLoginId(loginId);
+        login.setLoginPwd(loginPwd);
+        loginDBHelper.insert(login);  //Helper方式存数据
 
     }
 

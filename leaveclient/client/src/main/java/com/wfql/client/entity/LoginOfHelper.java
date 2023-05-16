@@ -1,15 +1,15 @@
 package com.wfql.client.entity;
 
-public class Loginbak {
+public class LoginOfHelper {
     private String loginId;
     private String loginPwd;
     private boolean remember;
 
-    public Loginbak() {
+    public LoginOfHelper() {
 
     }
 
-    public Loginbak(String loginid, String loginpwd, boolean isremember) {
+    public LoginOfHelper(String loginid, String loginpwd, boolean isremember) {
         this.loginId = loginid;
         this.loginPwd = loginpwd;
         this.remember = isremember;

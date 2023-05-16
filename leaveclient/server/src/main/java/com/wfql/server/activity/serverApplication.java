@@ -7,17 +7,17 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 
-import com.wfql.server.database.LoginDatabase;
+import com.wfql.server.dao.LoginDao;
+import com.wfql.server.database.LeaveSysDB;
 
-import java.util.HashMap;
+public class serverApplication extends Application {
 
-public class MyApplication extends Application {
+    private static serverApplication mApp;
 
-    private static MyApplication mApp;
+    private LeaveSysDB loginDatabase;
+    private static LoginDao loginDao;
 
-    private LoginDatabase loginDatabase;
-
-    public static MyApplication getInstance(){
+    public static serverApplication getInstance(){
         return mApp;
     }
 
@@ -26,25 +26,30 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
-        loginDatabase = Room.databaseBuilder(this, LoginDatabase.class, "Login")
-                //允许迁移数据库和允许数据库在主线程操作
-                .addMigrations()
-                .allowMainThreadQueries()
+        Log.d("wfql", "Application onCreate");
+        LeaveSysDB leaveSysDB = Room.databaseBuilder(mApp, LeaveSysDB.class, "LeaveSysDB")
                 .build();
-        Log.d("wfql", "MyApplication onCreate");
+        loginDao = leaveSysDB.loginDao();
+        Log.d("wfql", "loginDao in app create");
+
     }
 
-    public LoginDatabase getLoginDatabase(){
+    public LeaveSysDB getLoginDatabase(){
+
         return loginDatabase;
     }
 
-    public static LoginDatabase getLoginDatabaseInstance() {
-        LoginDatabase loginDatabaseInstance = getInstance().getLoginDatabase();
+    public static LoginDao getLoginDao(){
+        return loginDao;
+    }
+
+    public static LeaveSysDB getLoginDatabaseInstance() {
+        LeaveSysDB loginDatabaseInstance = getInstance().getLoginDatabase();
         if (loginDatabaseInstance == null) {
-            synchronized (MyApplication.class) {
+            synchronized (serverApplication.class) {
                 loginDatabaseInstance = getInstance().getLoginDatabase();
                 if (loginDatabaseInstance == null) {
-                    loginDatabaseInstance = Room.databaseBuilder(getInstance(), LoginDatabase.class, "Login")
+                    loginDatabaseInstance = Room.databaseBuilder(getInstance(), LeaveSysDB.class, "Login")
                             .addMigrations()
                             .allowMainThreadQueries()
                             .build();

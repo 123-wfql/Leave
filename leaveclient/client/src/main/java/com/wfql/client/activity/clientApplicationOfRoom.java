@@ -7,23 +7,21 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 
-import com.wfql.client.database.AdminDatabase;
-import com.wfql.client.database.LoginDatabase;
+import com.wfql.client.databaseNoNeed.LoginDatabaseOfRoom;
 
 import java.util.HashMap;
 
-public class MyApplication extends Application {
+public class clientApplicationOfRoom extends Application {
 
-    private static MyApplication mApp;
+    private static clientApplicationOfRoom mApp;
 
     //声明映射对象，当前全局变量使用
     public HashMap<String, String> infoMap = new HashMap<>();
 
-    private AdminDatabase adminDatabase;
-    private LoginDatabase loginDatabase;
+    private LoginDatabaseOfRoom loginDatabase;
 
 
-    public static MyApplication getInstance(){
+    public static clientApplicationOfRoom getInstance(){
         return mApp;
     }
 
@@ -32,13 +30,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
-        adminDatabase = Room.databaseBuilder(this, AdminDatabase.class, "Admin")
-                //允许迁移数据库和允许数据库在主线程操作
-                .addMigrations()
-                .allowMainThreadQueries()
-                .build();
-        Log.d("wfql", "adminDatabase onCreate");
-        loginDatabase = Room.databaseBuilder(this, LoginDatabase.class, "Login")
+        loginDatabase = Room.databaseBuilder(this, LoginDatabaseOfRoom.class, "Login")
                 //允许迁移数据库和允许数据库在主线程操作
                 .addMigrations()
                 .allowMainThreadQueries()
@@ -46,10 +38,7 @@ public class MyApplication extends Application {
         Log.d("wfql", "loginDatabase onCreate");
     }
 
-    public AdminDatabase getAdminDatabase(){
-        return adminDatabase;
-    }
-    public LoginDatabase getLoginDatabase() {
+    public LoginDatabaseOfRoom getLoginDatabase() {
         return loginDatabase;
     }
 

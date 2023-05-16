@@ -1,4 +1,4 @@
-package com.wfql.client.dao;
+package com.wfql.client.daoNoNeed;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -11,7 +11,7 @@ import com.wfql.client.entity.Login;
 import java.util.List;
 
 @Dao
-public interface LoginDao {
+public interface LoginDaoOfRoom {
 
 
     @Insert

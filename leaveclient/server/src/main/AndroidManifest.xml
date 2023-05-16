@@ -3,7 +3,7 @@
     package="com.wfql.server">
 
     <application
-        android:name="com.wfql.server.activity.MyApplication"
+        android:name="com.wfql.server.activity.serverApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,9 +13,58 @@
             android:name=".provider.LoginProvider"
             android:authorities="com.wfql.server.provider.LoginProvider"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true" />
+        <provider
+            android:name=".provider.AdminProvider"
+            android:authorities="com.wfql.server.provider.AdminProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".provider.DepartmentProvider"
+            android:authorities="com.wfql.server.provider.DepartmentProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".provider.FeedbackProvider"
+            android:authorities="com.wfql.server.provider.FeedbackProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".provider.InstitutionProvider"
+            android:authorities="com.wfql.server.provider.InstitutionProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".provider.LeaveProvider"
+            android:authorities="com.wfql.server.provider.LeaveProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".provider.LeaveTypeProvider"
+            android:authorities="com.wfql.server.provider.LeaveTypeProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".provider.NewsProvider"
+            android:authorities="com.wfql.server.provider.NewsProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".provider.RuleProvider"
+            android:authorities="com.wfql.server.provider.RuleProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".provider.UserProvider"
+            android:authorities="com.wfql.server.provider.UserProvider"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name=".provider.UserTypeProvider"
+            android:authorities="com.wfql.server.provider.UserTypeProvider"
+            android:enabled="true"
+            android:exported="true" />
 
-        </provider>
 
         <activity
             android:name=".activity.MainActivity"
