@@ -1,0 +1,710 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "315473b2d8b33af5b95c607015e03c4f",
+    "entities": [
+      {
+        "tableName": "Login",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`loginId` TEXT NOT NULL, `loginPwd` TEXT, `remember` INTEGER NOT NULL, PRIMARY KEY(`loginId`))",
+        "fields": [
+          {
+            "fieldPath": "loginId",
+            "columnName": "loginId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "loginPwd",
+            "columnName": "loginPwd",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "remember",
+            "columnName": "remember",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "loginId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Admin",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`adminId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `adminPwd` TEXT, `adminName` TEXT, `adminRemark` TEXT, `adminGender` TEXT, `adminContact` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "adminId",
+            "columnName": "adminId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "adminPwd",
+            "columnName": "adminPwd",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "adminName",
+            "columnName": "adminName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "adminRemark",
+            "columnName": "adminRemark",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "adminGender",
+            "columnName": "adminGender",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "adminContact",
+            "columnName": "adminContact",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "adminId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Department",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`department` TEXT NOT NULL, `depHeaderId` TEXT, `institution` TEXT, PRIMARY KEY(`department`), FOREIGN KEY(`institution`) REFERENCES `Institution`(`institution`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "department",
+            "columnName": "department",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "depHeaderId",
+            "columnName": "depHeaderId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "institution",
+            "columnName": "institution",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "department"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "Institution",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "institution"
+            ],
+            "referencedColumns": [
+              "institution"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Feedback",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`feedbackId` INTEGER NOT NULL, `fbContent` TEXT, `fbPeriod` INTEGER NOT NULL, `fbAuthorId` TEXT, PRIMARY KEY(`feedbackId`), FOREIGN KEY(`fbAuthorId`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "feedbackId",
+            "columnName": "feedbackId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fbContent",
+            "columnName": "fbContent",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fbPeriod",
+            "columnName": "fbPeriod",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fbAuthorId",
+            "columnName": "fbAuthorId",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "feedbackId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "User",
+            "onDelete": "NO ACTION",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "fbAuthorId"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Institution",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`institution` TEXT NOT NULL, `insHeaderId` TEXT, `userType` TEXT, PRIMARY KEY(`institution`), FOREIGN KEY(`userType`) REFERENCES `UserType`(`userType`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "institution",
+            "columnName": "institution",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "insHeaderId",
+            "columnName": "insHeaderId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userType",
+            "columnName": "userType",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "institution"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "UserType",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "userType"
+            ],
+            "referencedColumns": [
+              "userType"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Leave",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`leaveId` INTEGER NOT NULL, `userId` TEXT, `periodStart` INTEGER NOT NULL, `periodEnd` INTEGER NOT NULL, `periodSubmit` INTEGER NOT NULL, `leaveType` TEXT, `leaveReason` TEXT, `destination` TEXT, `status` INTEGER NOT NULL, `finish` INTEGER NOT NULL, `urgent` INTEGER NOT NULL, `check1` TEXT, `check1Status` TEXT, `check1Reason` TEXT, `check1Period` INTEGER NOT NULL, `check2` TEXT, `check2Status` TEXT, `check2Reason` TEXT, `check2Period` INTEGER NOT NULL, `check3` TEXT, `check3Status` TEXT, `check3Reason` TEXT, `check3Period` INTEGER NOT NULL, `outCode` TEXT, `resumed` INTEGER NOT NULL, PRIMARY KEY(`leaveId`), FOREIGN KEY(`userId`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`check1`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`check2`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`check3`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "leaveId",
+            "columnName": "leaveId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "periodStart",
+            "columnName": "periodStart",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "periodEnd",
+            "columnName": "periodEnd",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "periodSubmit",
+            "columnName": "periodSubmit",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "leaveType",
+            "columnName": "leaveType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "leaveReason",
+            "columnName": "leaveReason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "destination",
+            "columnName": "destination",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "finish",
+            "columnName": "finish",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "urgent",
+            "columnName": "urgent",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "check1",
+            "columnName": "check1",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "check1Status",
+            "columnName": "check1Status",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "check1Reason",
+            "columnName": "check1Reason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "check1Period",
+            "columnName": "check1Period",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "check2",
+            "columnName": "check2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "check2Status",
+            "columnName": "check2Status",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "check2Reason",
+            "columnName": "check2Reason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "check2Period",
+            "columnName": "check2Period",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "check3",
+            "columnName": "check3",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "check3Status",
+            "columnName": "check3Status",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "check3Reason",
+            "columnName": "check3Reason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "check3Period",
+            "columnName": "check3Period",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "outCode",
+            "columnName": "outCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resumed",
+            "columnName": "resumed",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "leaveId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "User",
+            "onDelete": "NO ACTION",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "userId"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          },
+          {
+            "table": "User",
+            "onDelete": "NO ACTION",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "check1"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          },
+          {
+            "table": "User",
+            "onDelete": "NO ACTION",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "check2"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          },
+          {
+            "table": "User",
+            "onDelete": "NO ACTION",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "check3"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "LeaveType",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`leaveType` TEXT NOT NULL, `needOut` INTEGER NOT NULL, PRIMARY KEY(`leaveType`))",
+        "fields": [
+          {
+            "fieldPath": "leaveType",
+            "columnName": "leaveType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "needOut",
+            "columnName": "needOut",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "leaveType"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "News",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`newsId` INTEGER NOT NULL, `newsContent` TEXT, `newsPeriod` INTEGER NOT NULL, `newsAuthorId` TEXT, PRIMARY KEY(`newsId`), FOREIGN KEY(`newsAuthorId`) REFERENCES `Admin`(`adminId`) ON UPDATE CASCADE ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "newsId",
+            "columnName": "newsId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "newsContent",
+            "columnName": "newsContent",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "newsPeriod",
+            "columnName": "newsPeriod",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "newsAuthorId",
+            "columnName": "newsAuthorId",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "newsId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "Admin",
+            "onDelete": "NO ACTION",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "newsAuthorId"
+            ],
+            "referencedColumns": [
+              "adminId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Rule",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ruleId` INTEGER NOT NULL, `userType` TEXT, `leaveType` TEXT, `urgent` INTEGER NOT NULL, `needCheck1` INTEGER NOT NULL, `needCheck2` INTEGER NOT NULL, `needCheck3` INTEGER NOT NULL, PRIMARY KEY(`ruleId`), FOREIGN KEY(`userType`) REFERENCES `UserType`(`userType`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`leaveType`) REFERENCES `LeaveType`(`leaveType`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "ruleId",
+            "columnName": "ruleId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userType",
+            "columnName": "userType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "leaveType",
+            "columnName": "leaveType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "urgent",
+            "columnName": "urgent",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "needCheck1",
+            "columnName": "needCheck1",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "needCheck2",
+            "columnName": "needCheck2",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "needCheck3",
+            "columnName": "needCheck3",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "ruleId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "UserType",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "userType"
+            ],
+            "referencedColumns": [
+              "userType"
+            ]
+          },
+          {
+            "table": "LeaveType",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "leaveType"
+            ],
+            "referencedColumns": [
+              "leaveType"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `userPwd` TEXT, `userName` TEXT, `verifyPhone` INTEGER NOT NULL, `userGender` TEXT, `enterYear` INTEGER NOT NULL, `iconUrl` TEXT, `checker` INTEGER NOT NULL, `userRemark` TEXT, `depName` TEXT, PRIMARY KEY(`userId`))",
+        "fields": [
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userPwd",
+            "columnName": "userPwd",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userName",
+            "columnName": "userName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "verifyPhone",
+            "columnName": "verifyPhone",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userGender",
+            "columnName": "userGender",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "enterYear",
+            "columnName": "enterYear",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "iconUrl",
+            "columnName": "iconUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "checker",
+            "columnName": "checker",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userRemark",
+            "columnName": "userRemark",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "depName",
+            "columnName": "depName",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "userId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "UserType",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userType` TEXT NOT NULL, `utHeaderId` TEXT, `institutionTitle` TEXT, `departmentTitle` TEXT, PRIMARY KEY(`userType`))",
+        "fields": [
+          {
+            "fieldPath": "userType",
+            "columnName": "userType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "utHeaderId",
+            "columnName": "utHeaderId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "institutionTitle",
+            "columnName": "institutionTitle",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "departmentTitle",
+            "columnName": "departmentTitle",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "userType"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '315473b2d8b33af5b95c607015e03c4f')"
+    ]
+  }
+}

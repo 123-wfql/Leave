@@ -7,14 +7,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -38,10 +39,10 @@ import android.widget.Toast;
 
 import com.wfql.client.R;
 import com.wfql.client.content.LoginContent;
-import com.wfql.client.daoNoNeed.LoginDaoOfRoom;
 import com.wfql.client.entity.Login;
 import com.wfql.client.util.YNAlertDialogUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, View.OnFocusChangeListener, AdapterView.OnItemSelectedListener, View.OnTouchListener {
@@ -63,13 +64,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String loginId;
     private String loginPwd;
     private boolean remember;
-    private List<String> loginidArray;
-    //private LoginDBHelper loginDBHelper;
+    private List<String> loginIdArray;
     private ArrayAdapter<String> loginidAdapter;
-    private SharedPreferences pref_login;
-    private LoginDaoOfRoom loginDao;
-
-
+    //private SharedPreferences pref_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +74,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
 
+        // 初始化控件
+        initialize();
+        // 设置样式
+        setViewStyles();
+        // 设置文本变化监听器
+        setTextChangeListeners();
+
+        //返回结果
+        register = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+
+            }
+        });
+
+    }
+
+//    private void resetLastLoginInfo() {
+//        String lastloginId = pref_login.getString("loginId", "");
+//        et_login_userid.setText(lastloginId);
+//        setLoginInfoById(lastloginId);
+//    }
+
+    private void setTextChangeListeners() {
+        et_login_userid.addTextChangedListener(new CodeTextWatcher(et_login_userid, 11));
+        et_login_pwd.addTextChangedListener(new CodeTextWatcher(et_login_pwd, 18));
+    }
+
+    private void setViewStyles() {
+        //图标
+        Drawable ic_user_info = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_user_id, null);
+        Drawable ic_user_pwd = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_user_pwd, null);
+        ic_user_info.setBounds(0,0,40,40);
+        ic_user_pwd.setBounds(0, 0, 40, 40);
+        et_login_userid.setCompoundDrawables(ic_user_info, null, null, null);
+        et_login_pwd.setCompoundDrawables(ic_user_pwd, null ,null, null);
+        //字体下划线
+        SpannableString content = new SpannableString(btn_clear_login.getText());
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        btn_clear_login.setText(content);
+    }
+
+    private void initialize() {
         btn_del_id = findViewById(R.id.btn_del_id);
         btn_del_pwd = findViewById(R.id.btn_del_pwd);
         btn_login = findViewById(R.id.btn_login);
@@ -88,21 +128,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         et_login_userid = findViewById(R.id.et_login_userid);
         et_login_pwd = findViewById(R.id.et_login_pwd);
         btn_clear_login = findViewById(R.id.btn_clear_login);
+        //pref_login = getSharedPreferences("share_login", Context.MODE_PRIVATE);
 
-        //样式重调
-        Drawable ic_user_info = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_user_id, null);
-        Drawable ic_user_pwd = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_user_pwd, null);
-        ic_user_info.setBounds(0,0,40,40);
-        ic_user_pwd.setBounds(0, 0, 40, 40);
-        et_login_userid.setCompoundDrawables(ic_user_info, null, null, null);
-        et_login_pwd.setCompoundDrawables(ic_user_pwd, null ,null, null);
+    }
 
-        SpannableString content = new SpannableString(btn_clear_login.getText());
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        btn_clear_login.setText(content);
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setListeners();
+        //resetLastLoginInfo();
+        refreshLoginIdArray();
+        if (loginidAdapter.getCount() > 0) {
+            et_login_userid.setText(loginidAdapter.getItem(loginidAdapter.getCount() - 1));
+        }
+        et_login_userid.setSelection(0);
+        setLoginInfoById(et_login_userid.getText().toString());
+    }
 
+    private void setListeners() {
         //OnClick
         btn_del_id.setOnClickListener(this);
         btn_del_pwd.setOnClickListener(this);
@@ -123,46 +176,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //OnTouch
         et_login_userid.setOnTouchListener(this);
 
-        //TextChange
-        et_login_userid.addTextChangedListener(new CodeTextWatcher(et_login_userid, 11));
-        et_login_pwd.addTextChangedListener(new CodeTextWatcher(et_login_pwd, 18));
-
-        //ItemSelected
+        //OnItemSelected
         //sp_userid.setOnItemSelectedListener(this);
-
-        //使用共享参数存储最后登录的用户名
-        pref_login = getSharedPreferences("share_login", Context.MODE_PRIVATE);
-
-
-        //重新进入首页
-        refreshLogin();
-
-        //返回结果
-        register = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-
-            }
-        });
-
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        refreshLogin();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        refreshLogin();
     }
 
     @Override
@@ -170,25 +185,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onPause();
     }
 
-    @SuppressLint("Range")
-    private void refreshLogin() {
+
+    private void refreshLoginIdArray() {
         //重新加载输入框提示列表
-        //Cursor cursor = getContentResolver().query(LoginContent.CONTENT_URI, null, null, null, null);
-//        if (cursor != null){
-//            Log.d("wfql", "query is not null");
-//            cursor.moveToFirst();
-//            while (cursor.moveToNext()){
-//                loginidArray.add(cursor.getString(cursor.getColumnIndex("loginId")));
-//            }
-//            cursor.close();
-//        }
-//        loginidAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, loginidArray);
-//        et_login_userid.setAdapter(loginidAdapter);
-
-        //将最后一次的登录的用户账号显示在输入框
-        String loginId1 = pref_login.getString("loginId", "");
-        et_login_userid.setText(loginId1);
-
+        Uri uri = Uri.parse(LoginContent.CONTENT_URI_TABLE);
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int loginIdColumnIndex = cursor.getColumnIndexOrThrow("loginId");
+            loginIdArray = new ArrayList<>();
+            do {
+                String loginId = cursor.getString(loginIdColumnIndex);
+                loginIdArray.add(loginId);
+                Log.d("query", "the cursor "+ loginId + " has added to Array");
+            } while (cursor.moveToNext());
+        } else loginIdArray = new ArrayList<>();
+        cursor.close();
+        loginidAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, loginIdArray);
+        et_login_userid.setAdapter(loginidAdapter);
     }
 
     @Override
@@ -205,73 +218,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if (motionEvent.getAction() == MotionEvent.ACTION_UP){
             if (view.getId() == R.id.et_login_userid){
-                et_login_userid.showDropDown();
+                if(loginIdArray != null){
+                    et_login_userid.showDropDown();
+                }
             }
         }
 
         return false;
-    }
-
-
-    // 定义一个编辑框监听器
-    private class CodeTextWatcher implements TextWatcher {
-        private EditText mView; // 声明一个编辑框对象
-        private int mMaxLength; // 声明一个最大长度变量
-        public CodeTextWatcher(EditText v, int maxLength) {
-            super();
-            mView = v;
-            mMaxLength = maxLength;
-        }
-        // 在编辑框的输入文本变化前触发
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-        // 在编辑框的输入文本变化时触发
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (mView.getId() == R.id.et_login_userid || mView.getId() == R.id.et_login_pwd) {
-                loginId = et_login_userid.getText().toString();
-                loginPwd = et_login_pwd.getText().toString();
-                btn_login.setEnabled(!TextUtils.isEmpty(loginId) && !TextUtils.isEmpty(loginPwd));    //登录按钮
-            }
-        }
-        // 在编辑框的输入文本变化后触发
-        @Override
-        public void afterTextChanged(Editable editable) {
-            String str = editable.toString(); // 获得已输入的文本字符串
-            if (mView.getId() == R.id.et_login_userid) {
-                if (str.length() == 0){ //未输入提示账户列表
-                    btn_del_id.setVisibility(View.GONE);
-                } else {
-                    btn_del_id.setVisibility(View.VISIBLE);
-                }
-                Login mlogin = null;
-                try {   //根据账号查找并自动填入密码信息
-                    //mlogin = loginDao.queryByLoginId(loginId);
-                    if (mlogin != null) {
-                        if (mlogin.isRemember()) {
-                            et_login_pwd.setText(mlogin.getLoginPwd());
-                            ck_remember_pwd.setChecked(true);
-                            btn_clear_login.setVisibility(View.VISIBLE);
-                            btn_del_pwd.setVisibility(View.GONE);
-                        } else {
-                            et_login_pwd.setText("");
-                            ck_remember_pwd.setChecked(false);
-                            btn_clear_login.setVisibility(View.VISIBLE);
-                            btn_del_pwd.setVisibility(View.GONE);
-                        }
-                    } else {
-                        btn_clear_login.setVisibility(View.GONE);
-                    }
-
-                } catch (Exception e){
-                    Log.e("TAG", "哎呀，查找账号记录出错了", e);
-                }
-            } else if (mView.getId() == R.id.et_login_pwd) {
-                btn_del_pwd.setVisibility(str.length() >= 1 ? View.VISIBLE : View.GONE);
-            }
-        }
-
-
     }
 
     @Override
@@ -281,15 +234,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             loginId = et_login_userid.getText().toString();
             loginPwd = et_login_pwd.getText().toString();
             remember = ck_remember_pwd.isChecked();
-            //if (loginId.equals("31195182") && loginPwd.equals("123455")) {
-                //记录登录信息
-                recordLogin();
-            //}
-            //验证数据库中的账号密码，成功则判断用户类型进入普通用户界面或管理员界面
+            // TODO: BCrypt to record pwd
+            successLogin();
 
 
-            //Intent intentMain = new Intent(this, AskLeaveActivity.class);
-            //startActivity(intentMain);
+
         } else if(id == R.id.btn_register){ //点击“注册”
             Intent intentRegister = new Intent(this, RegisterActivity.class);
             startActivity(intentRegister);
@@ -324,30 +273,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 register.launch(intentVerifyLogin);
             }
         } else if (id == R.id.btn_clear_login) {    //清除当前账号登录记录
-            //登录列表的信息
+            //删除登录列表的信息
             YNAlertDialogUtil dialogUtil = new YNAlertDialogUtil(this);
             AlertDialog.Builder builder = dialogUtil.createBuilder(LoginActivity.this, "", "是否清除该条登录记录", "清除", "取消");
             builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
                     if (dialogUtil.dialogResult){
-//                        loginDBHelper.deleteByLoginId(loginId);
-                        loginDao.deleteByLoginId(loginId);
+                        Uri uri = Uri.parse(LoginContent.CONTENT_URI_SQL + "");
+                        int rowsDeleted = getContentResolver().delete(uri, "loginId=?", new String[]{loginId});
+                        //int rowsDeleted = getContentResolver().delete(uri, null, null);
                         et_login_userid.setText("");
                         et_login_pwd.setText("");
+                        Toast.makeText(LoginActivity.this, "删除了"+Integer.toString(rowsDeleted)+"条记录", Toast.LENGTH_SHORT).show();
+                        refreshLoginIdArray();
                     }
                 }
             });
             AlertDialog dialog = builder.create();
             dialog.show();
-            //共享参数中的信息
-            if(loginId == pref_login.getString("loginId", "")){
-                SharedPreferences.Editor editor = pref_login.edit();
-                editor.putString("loginId", "");
-                editor.putString("password", "");
-                editor.putBoolean("isRemember", false);
-                editor.commit();
-            }
+
+//            //删除共享参数中的信息
+//            if(loginId.equals(pref_login.getString("loginId", ""))){
+//                SharedPreferences.Editor editor = pref_login.edit();
+//                editor.putString("loginId", "");
+//                editor.putString("password", "");
+//                editor.putBoolean("isRemember", false);
+//                editor.commit();
+//            }
 
         } else {
             //
@@ -355,23 +308,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void successLogin() {
+        recordLogin();
+        Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+        Intent intentMain = new Intent(this, AskLeaveActivity.class);
+        startActivity(intentMain);
+    }
+
     //登录成功
     private void recordLogin() {
-        SharedPreferences.Editor editor = pref_login.edit();
-        editor.putString("loginId", et_login_userid.getText().toString());
-        editor.commit();
-
+//        //使用共享参数
+//        SharedPreferences.Editor editor = pref_login.edit();
+//        editor.putString("loginId", et_login_userid.getText().toString());
+//        editor.commit();
 
         //使用contentProvider传输数据
         ContentValues values = new ContentValues();
         values.put("loginId", loginId);
         values.put("loginPwd", loginPwd);
         values.put("remember", remember);
-        //int deleteColumn = getContentResolver().delete(LoginContent.CONTENT_URI, "loginId", new String[]{loginId});
-//        if (deleteColumn > 0){
-            getContentResolver().insert(LoginContent.CONTENT_URI, values);
-//        }
-
+        Uri uri = Uri.parse(LoginContent.CONTENT_URI_SQL + "");
+        int deleteColumn = getContentResolver().delete(uri, "loginId=?", new String[]{loginId});
+        uri = Uri.parse(LoginContent.CONTENT_URI_TABLE);
+        getContentResolver().insert(uri, values);
 
     }
 
@@ -393,5 +352,75 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             btn_del_pwd.setVisibility(View.GONE);
             btn_del_id.setVisibility(TextUtils.isEmpty((et_login_userid.getText().toString())) ? View.GONE : View.VISIBLE);
         }
+    }
+
+    private void setLoginInfoById(String loginId) {
+        try {
+            Log.d("query", "loginId is " + loginId);
+            Uri uri = Uri.parse(LoginContent.CONTENT_URI_SQL);
+            Log.d("query", "uri is " + uri);
+            Cursor cursor = getContentResolver().query(uri, null, "loginId=?", new String[]{loginId}, null);
+            if (cursor != null && cursor.getCount() > 0) {
+                Log.d("query", "cursor from query is not null");
+                cursor.moveToFirst();
+                int isRememberColumnIndex = cursor.getColumnIndexOrThrow("remember");
+                int remember = cursor.getInt(isRememberColumnIndex);
+                Log.d("query", "remember is "+ remember);
+                int loginPwdColumnIndex = cursor.getColumnIndexOrThrow("loginPwd");
+                String loginPwd = cursor.getString(loginPwdColumnIndex);
+                if (remember == 1){
+                    et_login_pwd.setText(loginPwd);
+                } else et_login_pwd.setText("");
+                ck_remember_pwd.setChecked(remember == 1);
+                cursor.close();
+                btn_clear_login.setVisibility(View.VISIBLE);
+            } else {
+                btn_clear_login.setVisibility(View.GONE);
+            }
+        } catch (Exception e){
+            Log.e("wfql", "哎呀，查找账号记录出错了", e);
+        }
+    }
+
+    // 定义一个编辑框监听器
+    private class CodeTextWatcher implements TextWatcher {
+        private EditText mView; // 声明一个编辑框对象
+        private int mMaxLength; // 声明一个最大长度变量
+        public CodeTextWatcher(EditText v, int maxLength) {
+            super();
+            mView = v;
+            mMaxLength = maxLength;
+        }
+        // 在编辑框的输入文本变化前触发
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+        // 在编辑框的输入文本变化时触发
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (mView.getId() == R.id.et_login_userid || mView.getId() == R.id.et_login_pwd) {
+                loginId = et_login_userid.getText().toString();
+                loginPwd = et_login_pwd.getText().toString();
+                btn_login.setEnabled(!TextUtils.isEmpty(loginId) && !TextUtils.isEmpty(loginPwd));    //登录按钮
+            }
+        }
+        // 在编辑框的输入文本变化后触发
+        @Override
+        public void afterTextChanged(Editable editable) {
+            String str = editable.toString(); // 获得已输入的文本字符串
+            if (mView.getId() == R.id.et_login_userid) {
+                if (str.length() == 0){ //未输入提示账户列表
+                    btn_del_id.setVisibility(View.GONE);
+                } else {
+                    btn_del_id.setVisibility(View.VISIBLE);
+                    setLoginInfoById(loginId);
+                }
+
+
+            } else if (mView.getId() == R.id.et_login_pwd) {
+                btn_del_pwd.setVisibility(str.length() >= 1 ? View.VISIBLE : View.GONE);
+            }
+        }
+
+
     }
 }

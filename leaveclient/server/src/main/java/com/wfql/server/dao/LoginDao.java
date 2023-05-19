@@ -6,10 +6,13 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.wfql.server.entity.Login;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Dao
@@ -23,28 +26,26 @@ public interface LoginDao {
     void delete(Login... logins);
 
     @Query("DELETE FROM Login")
-    void deleteAll();
-
-    @Query("DELETE FROM Login WHERE :selection=:selectionArgs")
-    int delete(String selection, String[] selectionArgs);
+    int deleteAll();
 
     @Update
     int update(Login... logins);
 
     @Query("SELECT * FROM Login")
-    List<Login> queryAll();
+    Cursor queryAll();
+
+    @Query("SELECT * FROM Login ORDER BY :sortOrder ASC")
+    Cursor queryAllInSortOrder(String sortOrder);
 
     @Query("SELECT * FROM Login WHERE loginId=:loginId ORDER BY loginId DESC limit 1")
-    Login queryByLoginId(String loginId);
+    Cursor queryAllBySelection(String loginId);
 
-    @Query("SELECT loginId FROM Login")
-    List<String> queryLoginIdArrayList();
-
-    @Query("SELECT :projection FROM Login WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
-    Cursor query(String[] projection, String selection, String[] selectionArgs, String sortOrder);
+    @RawQuery
+    Cursor queryByExecSql(SupportSQLiteQuery query);
 
     @Query("SELECT * FROM Login WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
     Cursor query(String selection, String[] selectionArgs, String sortOrder);
 
-
+    @RawQuery
+    int deleteByExecSql(SupportSQLiteQuery query);
 }

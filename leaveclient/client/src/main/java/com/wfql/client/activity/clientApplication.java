@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
 
-import com.wfql.client.databaseNoNeed.LoginDatabaseOfRoom;
 
 import java.util.HashMap;
 
@@ -16,7 +15,6 @@ public class clientApplication extends Application {
     //声明映射对象，当前全局变量使用
     public HashMap<String, String> infoMap = new HashMap<>();
 
-    private LoginDatabaseOfRoom loginDatabase;
 
 
     public static clientApplication getInstance(){
@@ -30,9 +28,6 @@ public class clientApplication extends Application {
         mApp = this;
     }
 
-    public LoginDatabaseOfRoom getLoginDatabase() {
-        return loginDatabase;
-    }
 
     //APP终止调用
     @Override

@@ -26,11 +26,11 @@ public class serverApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
-        Log.d("wfql", "Application onCreate");
+        Log.d("create", "Application onCreate");
         LeaveSysDB leaveSysDB = Room.databaseBuilder(mApp, LeaveSysDB.class, "LeaveSysDB")
                 .build();
         loginDao = leaveSysDB.loginDao();
-        Log.d("wfql", "loginDao in app create");
+        Log.d("create", "loginDao in app create");
 
     }
 

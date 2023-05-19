@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("wfql", "MainActivity onCreate");
+        Log.d("create", "MainActivity onCreate");
         LeaveSysDB leaveSysDB = Room.databaseBuilder(this, LeaveSysDB.class, "LeaveSysDB")
                 .build();
         loginDao = leaveSysDB.loginDao();
-        Log.d("wfql", "loginDao in act create");
+        Log.d("create", "loginDao in act create");
     }
 
 
