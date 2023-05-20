@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title" />
+
+    <!-- 账号管理 -->
+    <Button
+        android:id="@+id/btn_account_management"
+        style="@style/text_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@drawable/btn_setting_selector"
+        android:gravity="start|center_vertical"
+        android:paddingStart="15dp"
+        android:text="账号管理"/>
+
+    <!-- 验证手机号 -->
+    <Button
+        android:id="@+id/btn_verify_phone_number"
+        style="@style/text_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@drawable/btn_setting_selector"
+        android:gravity="start|center_vertical"
+        android:paddingStart="15dp"
+        android:text="验证手机号"/>
+
+    <!-- 修改密码 -->
+    <Button
+        android:id="@+id/btn_change_password"
+        style="@style/text_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@drawable/btn_setting_selector"
+        android:gravity="start|center_vertical"
+        android:paddingStart="15dp"
+        android:text="修改密码"/>
+
+    <!-- 关于 -->
+    <Button
+        android:id="@+id/btn_about"
+        style="@style/text_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@drawable/btn_setting_selector"
+        android:gravity="start|center_vertical"
+        android:paddingStart="15dp"
+        android:text="关于"/>
+
+    <!-- 其他设置项 -->
+    <!-- ... -->
+
+</LinearLayout>
+

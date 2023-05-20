@@ -1,9 +1,410 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.wfql.client.activity.AdmActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/btn_adm_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/iv_adm_icon"
+                android:background="@color/transparent"
+                />
+
+            <ImageView
+                android:id="@+id/iv_adm_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="管理员头像（80*80）"
+                android:padding="10dp"
+                android:src="@drawable/ic_adm_icon" />
+
+            <TextView
+                android:id="@+id/tv_admname"
+                style="@style/text_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:layout_toEndOf="@id/iv_adm_icon"
+                android:padding="2dp"
+                android:text="金太阳"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tv_admid"
+                style="@style/text_minor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_admname"
+                android:layout_toEndOf="@id/iv_gender"
+                android:padding="2dp"
+                android:text="001" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                style="@style/text_minor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_admid"
+                android:layout_toEndOf="@id/iv_adm_icon"
+                android:padding="2dp"
+                android:text="999999999@gmail.com" />
+
+
+
+            <ImageView
+                android:id="@+id/iv_gender"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignTop="@id/tv_admid"
+                android:layout_alignBottom="@id/tv_admid"
+                android:layout_gravity="center_horizontal"
+                android:layout_toEndOf="@id/iv_adm_icon"
+                android:contentDescription="进入"
+                android:src="@drawable/ic_gender_male" />
+
+            <ImageView
+                android:id="@+id/iv_enter"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_alignTop="@id/tv_admid"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="进入"
+                android:src="@drawable/ic_enter" />
+
+            <ImageView
+                android:id="@+id/iv_admtype"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_alignTop="@id/tv_admname"
+                android:layout_alignBottom="@id/tv_admname"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="9dp"
+                android:layout_toEndOf="@id/tv_admname"
+                android:contentDescription="用户类型"
+                android:src="@drawable/ic_usertype"
+                android:text="学生" />
+
+
+            <TextView
+                android:id="@+id/tv_admtype"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_alignTop="@id/tv_admname"
+                android:layout_alignBottom="@id/tv_admname"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@id/tv_admname"
+                android:contentDescription="用户类型"
+                android:gravity="center"
+                android:text="普通" />
+
+        </RelativeLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:columnCount="2"
+            android:rowCount="3" >
+
+            <RelativeLayout
+                android:id="@+id/rl_institution"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_institution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent" />
+
+                <ImageView
+                    android:id="@+id/iv_institution_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_institution" />
+
+                <TextView
+                    android:id="@+id/tv_institution_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_institution_icon"
+                    android:padding="2dp"
+                    android:text="机构管理" />
+
+                <TextView
+                    android:id="@+id/tv_institution_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_institution_name"
+                    android:layout_toEndOf="@id/iv_institution_icon"
+                    android:padding="2dp"
+                    android:text="设置校内机构" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_user"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_user_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_user" />
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_user_icon"
+                    android:padding="2dp"
+                    android:text="用户管理" />
+
+                <TextView
+                    android:id="@+id/tv_user_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_user_name"
+                    android:layout_toEndOf="@id/iv_user_icon"
+                    android:padding="2dp"
+                    android:text="管理用户信息" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_admin"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_admin_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_admin" />
+
+                <TextView
+                    android:id="@+id/tv_admin_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_admin_icon"
+                    android:padding="2dp"
+                    android:text="管理员管理" />
+
+                <TextView
+                    android:id="@+id/tv_admin_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_admin_name"
+                    android:layout_toEndOf="@id/iv_admin_icon"
+                    android:padding="2dp"
+                    android:text="管理管理员" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_leavemanage"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_leavemanage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_leavemanage_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_leavemanage" />
+
+                <TextView
+                    android:id="@+id/tv_leavemanage_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_leavemanage_icon"
+                    android:padding="2dp"
+                    android:text="假条管理" />
+
+                <TextView
+                    android:id="@+id/tv_leavemanage_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_leavemanage_name"
+                    android:layout_toEndOf="@id/iv_leavemanage_icon"
+                    android:padding="2dp"
+                    android:text="管理假条信息" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_feedback"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_feedback_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_feedback" />
+
+                <TextView
+                    android:id="@+id/tv_feedback_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_feedback_icon"
+                    android:padding="2dp"
+                    android:text="反馈中心" />
+
+                <TextView
+                    android:id="@+id/tv_feedback_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_feedback_name"
+                    android:layout_toEndOf="@id/iv_feedback_icon"
+                    android:padding="2dp"
+                    android:text="查看用户反馈" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_news"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_news_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_news" />
+
+                <TextView
+                    android:id="@+id/tv_news_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_news_icon"
+                    android:padding="2dp"
+                    android:text="通知" />
+
+                <TextView
+                    android:id="@+id/tv_news_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_news_name"
+                    android:layout_toEndOf="@id/iv_news_icon"
+                    android:padding="2dp"
+                    android:text="发布学校消息" />
+
+            </RelativeLayout>
+
+
+
+
+        </GridLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

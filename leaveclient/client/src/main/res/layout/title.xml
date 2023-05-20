@@ -5,17 +5,18 @@
     android:layout_height="48dip"
     android:background="@color/bg_blue" >
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:singleLine="true"
+        android:text="标题"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
     <ImageView
-        android:id="@+id/back_btn"
+        android:id="@+id/btn_title_back"
         android:layout_width="48dip"
         android:layout_height="48dip"
         android:layout_centerVertical="true"
@@ -27,14 +28,16 @@
         android:onClick="goBack"/>
 
     <ImageView
-        android:id="@+id/search"
+        android:id="@+id/btn_title_func"
         android:layout_width="48dip"
         android:layout_height="48dip"
         android:padding="10dip"
         android:layout_alignParentRight="true"
         android:scaleType="fitXY"
-        android:src="@drawable/search"
+        android:onClick="topRightFunc"
         android:layout_centerVertical="true"
         android:background="@drawable/buttons"
-        android:visibility="gone" />
+        android:src="@drawable/ic_func_setting"
+        android:visibility="visible" />
+
 </RelativeLayout>

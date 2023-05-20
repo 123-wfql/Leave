@@ -54,7 +54,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignEnd="@id/et_verify_phone"
-                android:background="@drawable/btn_selector"
+                android:background="@drawable/btn_login_selector"
                 android:contentDescription="清除"
                 android:src="@drawable/ic_user_del"
                 android:visibility="gone" />
@@ -79,7 +79,7 @@
                 android:layout_height="48dp"
                 android:layout_below="@id/et_verify_phone"
                 android:layout_toStartOf="@id/btn_get_verifycode"
-                android:background="@drawable/btn_selector"
+                android:background="@drawable/btn_login_selector"
                 android:contentDescription="清除"
                 android:src="@drawable/ic_user_del"
                 android:visibility="gone" />

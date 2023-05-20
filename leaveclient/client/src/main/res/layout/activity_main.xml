@@ -1,20 +1,384 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.wfql.client.activity.MainActivity">
 
     <include layout="@layout/title" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="这里是主页"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/btn_user_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/iv_user_icon"
+                android:background="@color/transparent"
+                />
+
+            <ImageView
+                android:id="@+id/iv_user_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="用户头像（80*80）"
+                android:padding="10dp"
+                android:src="@drawable/ic_default_usericon" />
+
+            <TextView
+                android:id="@+id/tv_username"
+                style="@style/text_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:layout_toEndOf="@id/iv_user_icon"
+                android:padding="2dp"
+                android:text="小太阳"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tv_userid"
+                style="@style/text_minor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_username"
+                android:layout_toEndOf="@id/iv_gender"
+                android:padding="2dp"
+                android:text="31195182" />
+
+            <TextView
+                android:id="@+id/tv_institution"
+                style="@style/text_minor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_userid"
+                android:layout_toEndOf="@id/iv_user_icon"
+                android:padding="2dp"
+                android:text="计算机学院" />
+
+            <TextView
+                android:id="@+id/tv_department"
+                style="@style/text_minor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_userid"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/tv_institution"
+                android:padding="2dp"
+                android:text="软件工程" />
+
+            <ImageView
+                android:id="@+id/iv_gender"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignTop="@id/tv_userid"
+                android:layout_alignBottom="@id/tv_userid"
+                android:layout_gravity="center_horizontal"
+                android:layout_toEndOf="@id/iv_user_icon"
+                android:contentDescription="进入"
+                android:src="@drawable/ic_gender_male" />
+
+            <ImageView
+                android:id="@+id/iv_enter"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_alignTop="@id/tv_userid"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="进入"
+                android:src="@drawable/ic_enter" />
+
+            <ImageView
+                android:id="@+id/iv_usertype"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_alignTop="@id/tv_username"
+                android:layout_alignBottom="@id/tv_username"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="9dp"
+                android:layout_toEndOf="@id/tv_username"
+                android:contentDescription="用户类型"
+                android:src="@drawable/ic_usertype"
+                android:text="学生" />
+
+
+            <TextView
+                android:id="@+id/tv_usertype"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_alignTop="@id/tv_username"
+                android:layout_alignBottom="@id/tv_username"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@id/tv_username"
+                android:contentDescription="用户类型"
+                android:gravity="center"
+                android:src="@drawable/ic_usertype"
+                android:text="学生" />
+
+
+
+
+
+
+        </RelativeLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:columnCount="2"
+            android:rowCount="3" >
+
+            <RelativeLayout
+                android:id="@+id/rl_askleave"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_askleave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent" />
+
+                <ImageView
+                    android:id="@+id/iv_askleave_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="用户头像（80*80）"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_askleave" />
+
+                <TextView
+                    android:id="@+id/tv_askleave_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_askleave_icon"
+                    android:padding="2dp"
+                    android:text="我要请假" />
+
+                <TextView
+                    android:id="@+id/tv_askleave_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_askleave_name"
+                    android:layout_toEndOf="@id/iv_askleave_icon"
+                    android:padding="2dp"
+                    android:text="发起请假申请" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_check"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_check_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="用户头像（80*80）"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_check" />
+
+                <TextView
+                    android:id="@+id/tv_check_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_check_icon"
+                    android:padding="2dp"
+                    android:text="审批箱" />
+
+                <TextView
+                    android:id="@+id/tv_check_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_check_name"
+                    android:layout_toEndOf="@id/iv_check_icon"
+                    android:padding="2dp"
+                    android:text="审批待审假条" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_myleave"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_myleave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_myleave_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="用户头像（80*80）"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_myleave" />
+
+                <TextView
+                    android:id="@+id/tv_myleave_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_myleave_icon"
+                    android:padding="2dp"
+                    android:text="我的假条" />
+
+                <TextView
+                    android:id="@+id/tv_myleave_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_myleave_name"
+                    android:layout_toEndOf="@id/iv_myleave_icon"
+                    android:padding="2dp"
+                    android:text="查看进度及历史" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_feedback"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_feedback_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="用户头像（80*80）"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_feedback" />
+
+                <TextView
+                    android:id="@+id/tv_feedback_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_feedback_icon"
+                    android:padding="2dp"
+                    android:text="反馈中心" />
+
+                <TextView
+                    android:id="@+id/tv_feedback_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_feedback_name"
+                    android:layout_toEndOf="@id/iv_feedback_icon"
+                    android:padding="2dp"
+                    android:text="反馈建议和意见" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_news"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons">
+
+                <Button
+                    android:id="@+id/btn_news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/transparent"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_news_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="用户头像（80*80）"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_func_news" />
+
+                <TextView
+                    android:id="@+id/tv_news_name"
+                    style="@style/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_toEndOf="@id/iv_news_icon"
+                    android:padding="2dp"
+                    android:text="通知" />
+
+                <TextView
+                    android:id="@+id/tv_news_desc"
+                    style="@style/text_minor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_news_name"
+                    android:layout_toEndOf="@id/iv_news_icon"
+                    android:padding="2dp"
+                    android:text="查收学校消息" />
+
+            </RelativeLayout>
+
+        </GridLayout>
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

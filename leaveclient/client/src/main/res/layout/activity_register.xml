@@ -1,104 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wfql.client.activity.RegisterActivity">
+    android:orientation="vertical" >
 
-    <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:stretchColumns="1">
+    <include layout="@layout/title" />
 
+    <LinearLayout
+        android:id="@+id/ll_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:orientation="vertical" >
 
+        <LinearLayout
+            android:id="@+id/ll_register_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
+            <TextView
+                android:id="@+id/tv_register_username"
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:gravity="end"
+                android:text="姓        名："/>
 
-    <TableRow>
-        <TextView
-            android:text="用户名："
-            android:id="@+id/tv_reg_name"
-            android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/et_register_username"
+                style="@style/et_normal"
+                android:layout_width="0dp"
+                android:layout_weight="11"
+                android:background="@drawable/et_default"
+                android:ellipsize="end"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_register_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tv_register_gender"
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:gravity="right"
+                android:text="性        别："/>
+
+            <FrameLayout
+                style="@style/et_normal"
+                android:layout_width="0dp"
+                android:layout_weight="11"
+                android:background="@drawable/spinner_default" >
+
+                <Spinner
+                    android:id="@+id/sp_register_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"  />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_register_usertype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tv_register_usertype"
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:gravity="right"
+                android:text="用户类型："/>
+
+            <FrameLayout
+                style="@style/et_normal"
+                android:layout_width="0dp"
+                android:layout_weight="11"
+                android:background="@drawable/spinner_default" >
+
+                <Spinner
+                    android:id="@+id/sp_register_usertype"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"  />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_register_institution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tv_register_institution"
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:gravity="right"
+                android:text="所在学院："/>
+
+            <FrameLayout
+                style="@style/et_normal"
+                android:layout_width="0dp"
+                android:layout_weight="11"
+                android:background="@drawable/spinner_default" >
+
+                <Spinner
+                    android:id="@+id/sp_register_institution"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"  />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_register_department"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tv_register_department"
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:gravity="right"
+                android:text="所在专业："/>
+
+            <FrameLayout
+                style="@style/et_normal"
+                android:layout_width="0dp"
+                android:layout_weight="11"
+                android:background="@drawable/spinner_default" >
+
+                <Spinner
+                    android:id="@+id/sp_register_department"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"  />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_register_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tv_register_year"
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:gravity="right"
+                android:text="入学年份："/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_margin="5dp"
+                android:layout_weight="11">
+
+                <Button
+                    android:id="@+id/btn_register_year"
+                    style="@style/et_normal"
+                    android:layout_width="0dp"
+                    android:layout_margin="0dp"
+                    android:layout_weight="6"
+                    android:background="@drawable/et_default"
+                    android:drawableStart="@drawable/ic_calendar"
+                    android:drawablePadding="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="2023-4-1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_fgtpwd_first"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#0000ff"
-            />
+            android:layout_below="@id/ll_fgtpwd_phone" >
 
-        <EditText
-            android:text=""
-            android:id="@+id/userName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
-    </TableRow>
+            <TextView
+                android:id="@+id/tv_fgtpwd_first"
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="输入新密码:"/>
 
+            <EditText
+                android:id="@+id/et_fgtpwd_first"
+                style="@style/et_normal"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:autofillHints="password"
+                android:background="@drawable/et_default"
+                android:ellipsize="end"
+                android:hint="请输入6位以上新密码"
+                android:inputType="textPassword"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp" />
 
-    <TableRow>
-        <TextView
-            android:text="密码："
-            android:id="@+id/tv_reg_pwd"
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_fgtpwd_second"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#0000ff"
-            />
+            android:layout_below="@id/ll_fgtpwd_first">
 
-        <EditText
-            android:text=""
-            android:id="@+id/pwd"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:password="true"/>
+            <TextView
+                android:id="@+id/tv_fgtpwd_second"
+                style="@style/text_normal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="确认新密码:"/>
 
-    </TableRow>
+            <EditText
+                android:id="@+id/et_fgtpwd_second"
+                style="@style/et_normal"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:autofillHints="password"
+                android:background="@drawable/et_default"
+                android:ellipsize="end"
+                android:hint="请再次输入新密码"
+                android:inputType="textPassword"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp" />
 
-    <TableRow>
-        <TextView
-            android:text="电话："
-            android:id="@+id/tv_reg_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#0000ff"
-            />
+        </LinearLayout>
 
-        <EditText
-            android:text=""
-            android:id="@+id/phone"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:password="true"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:orientation="horizontal" >
 
-    </TableRow>
+            <Button
+                android:id="@+id/btn_askleave_commit"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@color/bg_blue"
+                android:enabled="false"
+                android:text="注册"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
 
-    <TableRow>
-        <TextView
-            android:text="所在学院："
-            android:id="@+id/tv_reg_academy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#0000ff"
-            />
+            <Button
+                android:id="@+id/btn_askleave_cancel"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@color/bg_gray"
+                android:enabled="true"
+                android:text="取消"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
 
-        <EditText
-            android:text=""
-            android:id="@+id/address"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+        </LinearLayout>
 
-    </TableRow>
 
-    <TableRow
-        android:gravity="right">
-        <Button
-            android:text="确定"
-            android:id="@+id/registerButton1"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
 
-        <Button
-            android:text="重置"
-            android:id="@+id/registerButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-    </TableRow>
-    </TableLayout>
+</LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+

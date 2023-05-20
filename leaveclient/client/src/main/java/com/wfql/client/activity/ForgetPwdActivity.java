@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wfql.client.R;
@@ -30,11 +31,13 @@ public class ForgetPwdActivity extends AppCompatActivity implements View.OnClick
     private String pwd_first;
     private String pwd_second;
     private String now_verifyCode;
+    private TextView tv_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_pwd);
+
 
         et_fgtpwd_phone = findViewById(R.id.et_fgtpwd_phone);
         et_fgtpwd_first = findViewById(R.id.et_fgtpwd_first);
@@ -43,6 +46,10 @@ public class ForgetPwdActivity extends AppCompatActivity implements View.OnClick
         btn_fgtpwd_getverifycode = findViewById(R.id.btn_fgtpwd_getverifycode);
         btn_fgtpwd_change = findViewById(R.id.btn_fgtpwd_change);
         btn_fgtpwd_cancel = findViewById(R.id.btn_fgtpwd_cancel);
+        tv_title = findViewById(R.id.tv_title);
+
+        tv_title.setText("修改密码");
+
 
         //OnClick
         btn_fgtpwd_getverifycode.setOnClickListener(this);

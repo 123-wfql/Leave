@@ -4,28 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wfql.client.activity.ForgetPwdActivity">
+    tools:context=".activity.ChangePwdActivity">
 
     <include layout="@layout/title" />
 
 
 
     <LinearLayout
-        android:id="@+id/ll_fgtpwd"
+        android:id="@+id/ll_changepwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.050" >
 
 
         <RelativeLayout
-            android:id="@+id/rl_fgtpwd"
+            android:id="@+id/rl_changepwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -33,17 +33,17 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ll_fgtpwd_phone"
+                android:id="@+id/ll_changepwd_oldpwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <TextView
-                    android:id="@+id/tv_fgtpwd_phone"
+                    android:id="@+id/tv_changepwd_oldpwd"
                     style="@style/text_normal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="手机号:"/>
+                    android:text="原密码:"/>
 
                 <EditText
                     android:id="@+id/et_fgtpwd_phone"
@@ -53,7 +53,7 @@
                     android:autofillHints=""
                     android:background="@drawable/et_default"
                     android:ellipsize="end"
-                    android:hint="请输入手机号"
+                    android:hint="请输入原密码"
                     android:inputType="number"
                     android:maxLength="11"
                     android:paddingStart="10dp"
@@ -62,13 +62,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_fgtpwd_first"
+                android:id="@+id/ll_changepwd_first"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ll_fgtpwd_phone" >
+                android:layout_below="@id/ll_changepwd_oldpwd" >
 
                 <TextView
-                    android:id="@+id/tv_fgtpwd_first"
+                    android:id="@+id/tv_changepwd_first"
                     style="@style/text_normal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -76,7 +76,7 @@
                     android:text="输入新密码:"/>
 
                 <EditText
-                    android:id="@+id/et_fgtpwd_first"
+                    android:id="@+id/et_changepwd_first"
                     style="@style/et_normal"
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -91,13 +91,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_fgtpwd_second"
+                android:id="@+id/ll_changepwd_second"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ll_fgtpwd_first">
+                android:layout_below="@id/ll_changepwd_first">
 
                 <TextView
-                    android:id="@+id/tv_fgtpwd_second"
+                    android:id="@+id/tv_changepwd_second"
                     style="@style/text_normal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -105,7 +105,7 @@
                     android:text="确认新密码:"/>
 
                 <EditText
-                    android:id="@+id/et_fgtpwd_second"
+                    android:id="@+id/et_changepwd_second"
                     style="@style/et_normal"
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -119,48 +119,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_fgtpwd_verify"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ll_fgtpwd_second">
-
-                <TextView
-                    android:id="@+id/tv_fgtpwd_verify"
-                    style="@style/text_normal"
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:gravity="right"
-                    android:text="验证码:"/>
-
-                <EditText
-                    android:id="@+id/et_fgtpwd_verify"
-                    style="@style/et_normal"
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:autofillHints=""
-                    android:background="@drawable/et_default"
-                    android:ellipsize="end"
-                    android:hint="请输入验证码"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp" />
-
-                <Button
-                    android:id="@+id/btn_fgtpwd_getverifycode"
-                    style="@style/text_minor"
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:background="@color/transparent"
-                    android:text="获取验证码" />
-
-            </LinearLayout>
-
-
-
-
-
         </RelativeLayout>
 
         <LinearLayout
@@ -172,8 +130,8 @@
                 android:id="@+id/btn_fgtpwd_change"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_weight="1"
                 android:layout_margin="3dp"
+                android:layout_weight="1"
                 android:background="@color/bg_blue"
                 android:enabled="false"
                 android:text="确认修改"
@@ -184,8 +142,8 @@
                 android:id="@+id/btn_fgtpwd_cancel"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_weight="1"
                 android:layout_margin="3dp"
+                android:layout_weight="1"
                 android:background="@color/bg_gray"
                 android:enabled="true"
                 android:text="取消"
@@ -198,9 +156,5 @@
 
 
     </LinearLayout>
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
