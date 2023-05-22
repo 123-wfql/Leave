@@ -1,17 +1,13 @@
 package com.wfql.client.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Interpolator;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -31,9 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wfql.client.R;
+import com.wfql.client.content.DepartmentContent;
+import com.wfql.client.content.InstitutionContent;
 import com.wfql.client.content.UserContent;
 import com.wfql.client.content.UserTypeContent;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -42,11 +40,11 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener {
 
-    private final static String PLS_SELECT = "——请选择——";
+    private final static String PLS_SELECT = "请选择";
     private final static String[] genderArray = {PLS_SELECT, "男", "女"};
-    private final static String[] userTypeArray = {PLS_SELECT, "学生", "教师"};
-    private final static String[] institutionArray = {PLS_SELECT, "计算机学院", "信息工程学院"};
-    private final static String[] departmentArray = {PLS_SELECT, "软件工程专业", "电子信息专业"};
+    //private final static String[] userTypeArray = {PLS_SELECT, "学生", "教师"};
+    private ArrayList<String> institutionArray;
+    //private final static String[] departmentArray = {PLS_SELECT, "软件工程专业", "电子信息专业"};
     private NumberPicker np_register_year;
     private EditText et_register_userName;
     private LinearLayout ll_register_institution;
@@ -70,6 +68,10 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     private String userId;
     private TextView tv_title;
     private String userPwd;
+    private ArrayList<String> userTypeArray;
+    private ArrayList<String> departmentArray;
+    private TextView tv_register_institution;
+    private TextView tv_register_department;
 
 
     @Override
@@ -91,6 +93,8 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         et_register_second = findViewById(R.id.et_register_second);
         btn_register_commit = findViewById(R.id.btn_register_commit);
         btn_register_cancel = findViewById(R.id.btn_register_cancel);
+        tv_register_institution = findViewById(R.id.tv_register_institution);
+        tv_register_department = findViewById(R.id.tv_register_department);
 
         tv_title.setText("用户注册");
 
@@ -112,22 +116,16 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         sp_register_gender.setAdapter(genderAdapter);
         sp_register_gender.setSelection(0);
 
-        ArrayAdapter<String> userTypeAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, userTypeArray);
-        sp_register_usertype.setAdapter(userTypeAdapter);
-        sp_register_usertype.setSelection(0);
 
-        ArrayAdapter<String> institutionAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, institutionArray);
-        sp_register_institution.setAdapter(institutionAdapter);
-        sp_register_institution.setSelection(0);
-
-        ArrayAdapter<String> departmentAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, departmentArray);
-        sp_register_department.setAdapter(departmentAdapter);
-        sp_register_department.setSelection(0);
 
         np_register_year.setMaxValue(Calendar.getInstance().get(Calendar.YEAR));
         np_register_year.setValue(2019);
-        enterYearSelected = Integer.toString(2019);
         np_register_year.setMinValue(1970);
+        enterYearSelected = Integer.toString(2019);
+
+        userTypeSelected = PLS_SELECT;
+        institutionSelected = PLS_SELECT;
+        departmentSelected = PLS_SELECT;
     }
 
     public void goBack(View view) {
@@ -141,18 +139,129 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
             genderSelected = (String) adapterView.getItemAtPosition(i);
         } else if (id == R.id.sp_register_userType){
             userTypeSelected = (String) adapterView.getItemAtPosition(i);
+            refreshTitle();
+            refreshInstitutionArray();
             ll_register_institution.setVisibility(!userTypeSelected.equals(PLS_SELECT) ? View.VISIBLE : View.GONE);
-
         } else if (id == R.id.sp_register_institution) {
             institutionSelected = (String) adapterView.getItemAtPosition(i);
+            refreshDepartmentArray();
             ll_register_department.setVisibility(!institutionSelected.equals(PLS_SELECT) ? View.VISIBLE : View.GONE);
         } else if (id ==  R.id.sp_register_department) {
             departmentSelected = (String) adapterView.getItemAtPosition(i);
         }
     }
 
+    private void refreshTitle() {
+        Uri uriTitle = Uri.parse(UserTypeContent.CONTENT_URI_SQL + "");
+        Cursor cursor = getContentResolver().query(uriTitle, null, "userType=?", new String[]{userTypeSelected}, null);
+        if(cursor != null ){
+            if(cursor.getCount() > 0){
+                cursor.moveToFirst();
+                int institutionTitleColumnIndex = cursor.getColumnIndexOrThrow("institutionTitle");
+                String institutionTitle = cursor.getString(institutionTitleColumnIndex);
+                int departmentTitleColumnIndex = cursor.getColumnIndexOrThrow("departmentTitle");
+                String departmentTitle = cursor.getString(departmentTitleColumnIndex);
+                tv_register_institution.setText("所在" + institutionTitle + "：");
+                tv_register_department.setText("所在" + departmentTitle + "：");
+
+            }
+            cursor.close();
+        }
+    }
+
+    private void refreshDepartmentArray() {
+        Uri uriDepartment = Uri.parse(DepartmentContent.CONTENT_URI_SQL + "");
+        departmentArray = new ArrayList<>();
+        departmentArray.add(PLS_SELECT);
+        Log.d("refresh", departmentSelected);
+        Cursor cursor = getContentResolver().query(uriDepartment, null, "institution=?", new String[]{institutionSelected}, null);
+        if(cursor != null ){
+            if(cursor.getCount() > 0){
+                cursor.moveToFirst();
+                int departmentColumnIndex = cursor.getColumnIndexOrThrow("department");
+                do{
+                    String department = cursor.getString(departmentColumnIndex);
+                    departmentArray.add(department);
+                }while(cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        ArrayAdapter<String> departmentAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, departmentArray);
+        sp_register_department.setAdapter(departmentAdapter);
+        sp_register_department.setSelection(0);
+    }
+
+    private void refreshInstitutionArray() {
+        Uri uriInstitution = Uri.parse(InstitutionContent.CONTENT_URI_SQL + "");
+        institutionArray = new ArrayList<>();
+        institutionArray.add(PLS_SELECT);
+        Log.d("refresh", institutionSelected);
+        Cursor cursor = getContentResolver().query(uriInstitution, null, "userType=?", new String[]{userTypeSelected}, null);
+        if(cursor != null){
+            if(cursor.getCount() > 0){
+                cursor.moveToFirst();
+                int institutionColumnIndex = cursor.getColumnIndexOrThrow("institution");
+                do{
+                    String institution = cursor.getString(institutionColumnIndex);
+                    institutionArray.add(institution);
+                }while(cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        ArrayAdapter<String> institutionAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, institutionArray);
+        sp_register_institution.setAdapter(institutionAdapter);
+        sp_register_institution.setSelection(0);
+    }
+
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshUserTypeArray();
+
+
+    }
+
+    private void refreshUserTypeArray() {
+        Uri uriUserType = Uri.parse(UserTypeContent.CONTENT_URI_SQL + "");
+        userTypeArray = new ArrayList<>();
+        userTypeArray.add(PLS_SELECT);
+        Cursor cursor = getContentResolver().query(uriUserType, null, null, null, null);
+        if(cursor != null){
+            if(cursor.getCount() > 0){
+
+                cursor.moveToFirst();
+                int userTypeColumnIndex = cursor.getColumnIndexOrThrow("userType");
+                do{
+                    String userType = cursor.getString(userTypeColumnIndex);
+                    userTypeArray.add(userType);
+                }while(cursor.moveToNext());
+            }
+            cursor.close();
+
+        }
+
+        ArrayAdapter<String> userTypeAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, userTypeArray);
+        sp_register_usertype.setAdapter(userTypeAdapter);
+        sp_register_usertype.setSelection(0);
+
 
     }
 
@@ -186,21 +295,8 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
             if (firstPwd.equals(secondPwd)) {
                 if(createUserId()){
                     if(recordUser()){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setMessage("注册成功，你的ID是：" + userId)
-                                .setPositiveButton("去登录", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // 点击去登录按钮后的操作
-                                        // 跳转到登录界面，并携带ID和密码参数
-                                        Intent intentLogin = new Intent(RegisterActivity.this, LoginActivity.class);
-                                        intentLogin.putExtra("userId", userId);
-                                        intentLogin.putExtra("userPwd", firstPwd);
-                                        intentLogin.putExtra("sourceActivity", RegisterActivity.class);
-                                        startActivity(intentLogin);
-                                    }
-                                });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+                        showSuccessDialog();
+
                     };
                 };
 
@@ -210,6 +306,24 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         }else if(id == R.id.btn_register_cancel) {
             finish();
         };
+    }
+
+    private void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("注册成功，你的ID是：" + userId)
+                .setPositiveButton("去登录", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // 点击去登录按钮后的操作
+                        // 跳转到登录界面，并携带ID和密码参数
+                        Intent intentLogin = new Intent(RegisterActivity.this, LoginActivity.class);
+                        intentLogin.putExtra("userId", userId);
+                        intentLogin.putExtra("userPwd", firstPwd);
+                        intentLogin.putExtra("sourceActivity", RegisterActivity.class);
+                        startActivity(intentLogin);
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private boolean createUserId() {
@@ -273,7 +387,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     private boolean recordUser() {
         userPwd = BCrypt.withDefaults().hashToString(12, firstPwd.toCharArray());
-        Uri uri = Uri.parse(UserContent.CONTENT_URI_SQL + "");
+        Uri uri = Uri.parse(UserContent.CONTENT_URI_TABLE + "");
         ContentValues values = new ContentValues();
         values.put("userId", userId);
         values.put("userPwd", userPwd);
@@ -284,11 +398,12 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         values.put("iconUrl", "");
         values.put("checkLv", 0);
         values.put("userRemark", "");
-        values.put("depName", departmentSelected);
+        values.put("department", departmentSelected);
         values.put("governLv", 0);
         values.put("job", "");
         try {
             getContentResolver().insert(uri, values);
+            Log.d("insert", "成功");
         } catch (Exception e){
             Toast.makeText((Context)RegisterActivity.this, (CharSequence) e, Toast.LENGTH_SHORT ).show();
             return false;

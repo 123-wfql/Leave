@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String loginPwd;
     private boolean remember;
     private List<String> loginIdArray;
-    private ArrayAdapter<String> loginidAdapter;
+    private ArrayAdapter<String> loginIdAdapter;
     //private SharedPreferences pref_login;
 
     @Override
@@ -156,8 +156,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setListeners();
         //resetLastLoginInfo();
         refreshLoginIdArray();
-        if (loginidAdapter.getCount() > 0) {
-            et_login_userid.setText(loginidAdapter.getItem(loginidAdapter.getCount() - 1));
+        if (loginIdAdapter.getCount() > 0) {
+            et_login_userid.setText(loginIdAdapter.getItem(loginIdAdapter.getCount() - 1));
         }
         et_login_userid.setSelection(0);
         setLoginInfoById(et_login_userid.getText().toString());
@@ -217,8 +217,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             } while (cursor.moveToNext());
         } else loginIdArray = new ArrayList<>();
         cursor.close();
-        loginidAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, loginIdArray);
-        et_login_userid.setAdapter(loginidAdapter);
+        loginIdAdapter = new ArrayAdapter<>(this, R.layout.stringarray_select, loginIdArray);
+        et_login_userid.setAdapter(loginIdAdapter);
     }
 
     @Override
@@ -255,9 +255,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if(recordUserToApp()){
                         successLogin();
                     }
-
                 }
-
             } else {
                 Log.d("check", "校验密码失败");
                 Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
@@ -306,7 +304,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (dialogUtil.dialogResult){
                         Uri uri = Uri.parse(LoginContent.CONTENT_URI_SQL + "");
                         int rowsDeleted = getContentResolver().delete(uri, "loginId=?", new String[]{loginId});
-                        //int rowsDeleted = getContentResolver().delete(uri, null, null);
                         et_login_userid.setText("");
                         et_login_pwd.setText("");
                         Toast.makeText(LoginActivity.this, "删除了"+Integer.toString(rowsDeleted)+"条记录", Toast.LENGTH_SHORT).show();

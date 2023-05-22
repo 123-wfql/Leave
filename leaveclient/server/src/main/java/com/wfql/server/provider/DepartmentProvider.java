@@ -82,12 +82,12 @@ public class DepartmentProvider extends ContentProvider {
                 break;
             case DEPARTMENT_TABLE_ROW:
 
-            case DEPARTMENT_SQL:
+            case DEPARTMENT_SQL_ROW:
                 cursor = null;
                 break;
 
-            case DEPARTMENT_SQL_ROW:
-                String baseQuery = "SELECT %s FROM Admin%s%s";
+            case DEPARTMENT_SQL:
+                String baseQuery = "SELECT %s FROM Department%s%s";
                 String projectionClause = (projection != null && projection.length > 0) ? TextUtils.join(",", projection) : "*";
                 String selectionClause = (!TextUtils.isEmpty(selection)) ? " WHERE " + selection : "";
                 String sortOrderClause = (!TextUtils.isEmpty(sortOrder)) ? " ORDER BY " + sortOrder : "";

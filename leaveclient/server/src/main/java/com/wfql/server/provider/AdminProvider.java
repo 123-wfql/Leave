@@ -83,11 +83,11 @@ public class AdminProvider extends ContentProvider {
                 break;
             case ADMIN_TABLE_ROW:
 
-            case ADMIN_SQL:
+            case ADMIN_SQL_ROW:
                 cursor = null;
                 break;
 
-            case ADMIN_SQL_ROW:
+            case ADMIN_SQL:
                 String baseQuery = "SELECT %s FROM Admin%s%s";
                 String projectionClause = (projection != null && projection.length > 0) ? TextUtils.join(",", projection) : "*";
                 String selectionClause = (!TextUtils.isEmpty(selection)) ? " WHERE " + selection : "";

@@ -83,11 +83,11 @@ public class LeaveProvider extends ContentProvider {
                 break;
             case LEAVE_TABLE_ROW:
 
-            case LEAVE_SQL:
+            case LEAVE_SQL_ROW:
                 cursor = null;
                 break;
 
-            case LEAVE_SQL_ROW:
+            case LEAVE_SQL:
                 String baseQuery = "SELECT %s FROM Insti%s%s";
                 String projectionClause = (projection != null && projection.length > 0) ? TextUtils.join(",", projection) : "*";
                 String selectionClause = (!TextUtils.isEmpty(selection)) ? " WHERE " + selection : "";

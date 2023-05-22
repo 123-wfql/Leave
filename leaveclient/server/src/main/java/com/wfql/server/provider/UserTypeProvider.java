@@ -84,12 +84,12 @@ public class UserTypeProvider extends ContentProvider {
                 break;
             case USERTYPE_TABLE_ROW:
 
-            case USERTYPE_SQL:
+            case USERTYPE_SQL_ROW:
                 cursor = null;
                 break;
 
-            case USERTYPE_SQL_ROW:
-                String baseQuery = "SELECT %s FROM Insti%s%s";
+            case USERTYPE_SQL:
+                String baseQuery = "SELECT %s FROM UserType%s%s";
                 String projectionClause = (projection != null && projection.length > 0) ? TextUtils.join(",", projection) : "*";
                 String selectionClause = (!TextUtils.isEmpty(selection)) ? " WHERE " + selection : "";
                 String sortOrderClause = (!TextUtils.isEmpty(sortOrder)) ? " ORDER BY " + sortOrder : "";

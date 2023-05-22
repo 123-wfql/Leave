@@ -83,12 +83,12 @@ public class InstitutionProvider extends ContentProvider {
                 break;
             case INSTITUTION_TABLE_ROW:
 
-            case INSTITUTION_SQL:
+            case INSTITUTION_SQL_ROW:
                 cursor = null;
                 break;
 
-            case INSTITUTION_SQL_ROW:
-                String baseQuery = "SELECT %s FROM Insti%s%s";
+            case INSTITUTION_SQL:
+                String baseQuery = "SELECT %s FROM Institution%s%s";
                 String projectionClause = (projection != null && projection.length > 0) ? TextUtils.join(",", projection) : "*";
                 String selectionClause = (!TextUtils.isEmpty(selection)) ? " WHERE " + selection : "";
                 String sortOrderClause = (!TextUtils.isEmpty(sortOrder)) ? " ORDER BY " + sortOrder : "";

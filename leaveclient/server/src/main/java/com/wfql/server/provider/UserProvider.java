@@ -62,6 +62,7 @@ public class UserProvider extends ContentProvider {
                 user.setUserName(values.getAsString("userName"));
                 user.setVerifyPhone(values.getAsString("verifyPhone"));
                 user.setUserGender(values.getAsString("userGender"));
+                Log.d("insert", user.getUserGender());
                 user.setEnterYear(values.getAsInteger("enterYear"));
                 user.setIconUrl(values.getAsString("iconUrl"));
                 user.setCheckerLv(values.getAsInteger("checkLv"));

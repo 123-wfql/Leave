@@ -83,11 +83,11 @@ public class RuleProvider extends ContentProvider {
                 break;
             case RULE_TABLE_ROW:
 
-            case RULE_SQL:
+            case RULE_SQL_ROW:
                 cursor = null;
                 break;
 
-            case RULE_SQL_ROW:
+            case RULE_SQL:
                 String baseQuery = "SELECT %s FROM Insti%s%s";
                 String projectionClause = (projection != null && projection.length > 0) ? TextUtils.join(",", projection) : "*";
                 String selectionClause = (!TextUtils.isEmpty(selection)) ? " WHERE " + selection : "";

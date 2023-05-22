@@ -10,7 +10,7 @@ import androidx.room.RawQuery;
 import androidx.room.Update;
 import androidx.sqlite.db.SupportSQLiteQuery;
 
-import com.wfql.server.entity.Admin;
+
 import com.wfql.server.entity.Department;
 
 @Dao

@@ -83,11 +83,11 @@ public class FeedbackProvider extends ContentProvider {
                 break;
             case FEEDBACK_TABLE_ROW:
 
-            case FEEDBACK_SQL:
+            case FEEDBACK_SQL_ROW:
                 cursor = null;
                 break;
 
-            case FEEDBACK_SQL_ROW:
+            case FEEDBACK_SQL:
                 String baseQuery = "SELECT %s FROM Insti%s%s";
                 String projectionClause = (projection != null && projection.length > 0) ? TextUtils.join(",", projection) : "*";
                 String selectionClause = (!TextUtils.isEmpty(selection)) ? " WHERE " + selection : "";

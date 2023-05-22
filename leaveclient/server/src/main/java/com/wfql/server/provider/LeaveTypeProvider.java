@@ -83,11 +83,11 @@ public class LeaveTypeProvider extends ContentProvider {
                 break;
             case LEAVETYPE_TABLE_ROW:
 
-            case LEAVETYPE_SQL:
+            case LEAVETYPE_SQL_ROW:
                 cursor = null;
                 break;
 
-            case LEAVETYPE_SQL_ROW:
+            case LEAVETYPE_SQL:
                 String baseQuery = "SELECT %s FROM Insti%s%s";
                 String projectionClause = (projection != null && projection.length > 0) ? TextUtils.join(",", projection) : "*";
                 String selectionClause = (!TextUtils.isEmpty(selection)) ? " WHERE " + selection : "";

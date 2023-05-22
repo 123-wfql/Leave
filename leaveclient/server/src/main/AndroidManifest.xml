@@ -58,6 +58,11 @@
             android:authorities="com.wfql.server.provider.UserTypeProvider"
             android:enabled="true"
             android:exported="true" />
+        <provider
+            android:name=".provider.DepartmentProvider"
+            android:authorities="com.wfql.server.provider.DepartmentProvider"
+            android:enabled="true"
+            android:exported="true" />
 
 
         <activity

@@ -83,11 +83,11 @@ public class NewsProvider extends ContentProvider {
                 break;
             case NEWS_TABLE_ROW:
 
-            case NEWS_SQL:
+            case NEWS_SQL_ROW:
                 cursor = null;
                 break;
 
-            case NEWS_SQL_ROW:
+            case NEWS_SQL:
                 String baseQuery = "SELECT %s FROM Insti%s%s";
                 String projectionClause = (projection != null && projection.length > 0) ? TextUtils.join(",", projection) : "*";
                 String selectionClause = (!TextUtils.isEmpty(selection)) ? " WHERE " + selection : "";
