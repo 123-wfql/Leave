@@ -6,16 +6,15 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
+import com.wfql.server.entity.Admin;
 import com.wfql.server.entity.Department;
-
-import java.util.List;
 
 @Dao
 public interface DepartmentDao {
-
-
     @Insert
     void insert(Department... departments);
 
@@ -32,16 +31,19 @@ public interface DepartmentDao {
     int update(Department... departments);
 
     @Query("SELECT * FROM Department")
-    List<Department> queryAll();
+    Cursor queryAll();
 
     @Query("SELECT * FROM Department WHERE department=:department ORDER BY department DESC limit 1")
     Department queryByDepartment(String department);
 
-    @Query("SELECT :projection FROM Department WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
-    Cursor query(String[] projection, String selection, String[] selectionArgs, String sortOrder);
-
     @Query("SELECT * FROM Department WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
     Cursor query(String selection, String[] selectionArgs, String sortOrder);
+
+    @RawQuery
+    Cursor queryByExecSql(SupportSQLiteQuery query);
+
+    @RawQuery
+    int deleteByExecSql(SupportSQLiteQuery query);
 
 
 }

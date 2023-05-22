@@ -16,8 +16,8 @@ import com.wfql.server.dao.UserDao;
 import com.wfql.server.dao.UserTypeDao;
 import com.wfql.server.entity.Admin;
 import com.wfql.server.entity.Department;
-import com.wfql.server.entity.Feedback;
 import com.wfql.server.entity.Institution;
+import com.wfql.server.entity.Feedback;
 import com.wfql.server.entity.Leave;
 import com.wfql.server.entity.LeaveType;
 import com.wfql.server.entity.Login;
@@ -26,15 +26,15 @@ import com.wfql.server.entity.Rule;
 import com.wfql.server.entity.User;
 import com.wfql.server.entity.UserType;
 
-@Database(entities = {Login.class, Admin.class, Department.class, Feedback.class, Institution.class,
+@Database(entities = {Login.class, Admin.class, Institution.class, Feedback.class, Department.class,
         Leave.class, LeaveType.class, News.class, Rule.class, User.class, UserType.class},
-        version = 2, exportSchema = true)
+        version = 1, exportSchema = true)
 public abstract class LeaveSysDB extends RoomDatabase {
     public abstract LoginDao loginDao();
     public abstract AdminDao adminDao();
-    public abstract DepartmentDao departmentDao();
     public abstract FeedbackDao feedbackDao();
     public abstract InstitutionDao institutionDao();
+    public abstract DepartmentDao departmentDao();
     public abstract LeaveDao leaveDao();
     public abstract LeaveTypeDao leaveTypeDao();
     public abstract NewsDao newsDao();

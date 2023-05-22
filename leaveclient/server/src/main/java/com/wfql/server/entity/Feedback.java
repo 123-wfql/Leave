@@ -5,10 +5,10 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = User.class,
+@Entity/*(foreignKeys = @ForeignKey(entity = User.class,
         parentColumns = "userId",
         childColumns = "fbAuthorId",
-        onUpdate = ForeignKey.CASCADE))
+        onUpdate = ForeignKey.CASCADE))*/
 public class Feedback {
     @PrimaryKey@NonNull
     private long feedbackId;

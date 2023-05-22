@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = {
+@Entity/*(foreignKeys = {
         @ForeignKey(entity = User.class,
                 parentColumns = "userId",
                 childColumns = "userId",
@@ -22,7 +22,7 @@ import androidx.room.PrimaryKey;
                 parentColumns = "userId",
                 childColumns = "check3",
                 onUpdate = ForeignKey.CASCADE)
-        })
+        })*/
 public class Leave {
     @PrimaryKey@NonNull
     private long leaveId;

@@ -6,7 +6,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.wfql.server.entity.Leave;
 
@@ -32,7 +34,7 @@ public interface LeaveDao {
     int update(Leave... leaves);
 
     @Query("SELECT * FROM Leave")
-    List<Leave> queryAll();
+    Cursor queryAll();
 
     @Query("SELECT * FROM Leave WHERE leaveId=:leaveId ORDER BY leaveId DESC limit 1")
     Leave queryByLeaveId(String leaveId);
@@ -42,6 +44,12 @@ public interface LeaveDao {
 
     @Query("SELECT * FROM Leave WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
     Cursor query(String selection, String[] selectionArgs, String sortOrder);
+
+    @RawQuery
+    Cursor queryByExecSql(SupportSQLiteQuery query);
+
+    @RawQuery
+    int deleteByExecSql(SupportSQLiteQuery query);
 
 
 }

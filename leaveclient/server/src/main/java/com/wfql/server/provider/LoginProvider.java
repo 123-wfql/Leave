@@ -28,12 +28,11 @@ public class LoginProvider extends ContentProvider {
     private static final int LOGIN_SQL_ROW = 4;
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-
-
     static {
         uriMatcher.addURI("com.wfql.server.provider.LoginProvider", "Login/all", LOGIN_TABLE);
         uriMatcher.addURI("com.wfql.server.provider.LoginProvider", "Login/all/#", LOGIN_TABLE_ROW);
         uriMatcher.addURI("com.wfql.server.provider.LoginProvider", "Login/sql", LOGIN_SQL);
+        uriMatcher.addURI("com.wfql.server.provider.LoginProvider", "Login/sql/#", LOGIN_SQL_ROW);
     }
 
     @Override
@@ -51,11 +50,27 @@ public class LoginProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        Login login = new Login();
-        login.setLoginId(values.getAsString("loginId"));
-        login.setLoginPwd(values.getAsString("loginPwd"));
-        login.setRemember(values.getAsBoolean("remember"));
-        loginDao.insert(login);
+        int match = uriMatcher.match(uri);
+        switch (match){
+            case LOGIN_TABLE:
+                Login login = new Login();
+                login.setLoginId(values.getAsString("loginId"));
+                login.setLoginPwd(values.getAsString("loginPwd"));
+                login.setRemember(values.getAsBoolean("remember"));
+                loginDao.insert(login);
+                break;
+            case LOGIN_TABLE_ROW:
+
+                break;
+            case LOGIN_SQL:
+
+                break;
+            case LOGIN_SQL_ROW:
+
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
         return uri;
     }
 

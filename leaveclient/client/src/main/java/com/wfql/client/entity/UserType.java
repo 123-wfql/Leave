@@ -2,9 +2,27 @@ package com.wfql.client.entity;
 
 public class UserType {
     private String userType;
-    private String utHeaderId;
     private String institutionTitle;
     private String departmentTitle;
+    private String idTag;
+
+    @Override
+    public String toString() {
+        return "UserType{" +
+                "userType='" + userType + '\'' +
+                ", institutionTitle='" + institutionTitle + '\'' +
+                ", departmentTitle='" + departmentTitle + '\'' +
+                ", idTag='" + idTag + '\'' +
+                '}';
+    }
+
+    public String getIdTag() {
+        return idTag;
+    }
+
+    public void setIdTag(String idTag) {
+        this.idTag = idTag;
+    }
 
     public String getUserType() {
         return userType;
@@ -12,14 +30,6 @@ public class UserType {
 
     public void setUserType(String userType) {
         this.userType = userType;
-    }
-
-    public String getUtHeaderId() {
-        return utHeaderId;
-    }
-
-    public void setUtHeaderId(String utHeaderId) {
-        this.utHeaderId = utHeaderId;
     }
 
     public String getInstitutionTitle() {
@@ -38,13 +48,4 @@ public class UserType {
         this.departmentTitle = departmentTitle;
     }
 
-    @Override
-    public String toString() {
-        return "UserType{" +
-                "userType='" + userType + '\'' +
-                ", utHeaderId='" + utHeaderId + '\'' +
-                ", institutionTitle='" + institutionTitle + '\'' +
-                ", departmentTitle='" + departmentTitle + '\'' +
-                '}';
-    }
 }

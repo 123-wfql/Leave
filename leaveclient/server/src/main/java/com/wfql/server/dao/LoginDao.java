@@ -43,9 +43,6 @@ public interface LoginDao {
     @RawQuery
     Cursor queryByExecSql(SupportSQLiteQuery query);
 
-    @Query("SELECT * FROM Login WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
-    Cursor query(String selection, String[] selectionArgs, String sortOrder);
-
     @RawQuery
     int deleteByExecSql(SupportSQLiteQuery query);
 }

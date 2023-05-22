@@ -2,34 +2,21 @@ package com.wfql.server.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = Institution.class,
-                                parentColumns = "institution",
-                                childColumns = "institution",
-                                onDelete = ForeignKey.CASCADE,
-                                onUpdate = ForeignKey.CASCADE))
+@Entity
 public class Department {
     @PrimaryKey@NonNull
     private String department;
-    private String depHeaderId;
     private String institution;
 
+    @NonNull
     public String getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(@NonNull String department) {
         this.department = department;
-    }
-
-    public String getDepHeaderId() {
-        return depHeaderId;
-    }
-
-    public void setDepHeaderId(String depHeaderId) {
-        this.depHeaderId = depHeaderId;
     }
 
     public String getInstitution() {
@@ -44,7 +31,6 @@ public class Department {
     public String toString() {
         return "Department{" +
                 "department='" + department + '\'' +
-                ", depHeaderId='" + depHeaderId + '\'' +
                 ", institution='" + institution + '\'' +
                 '}';
     }

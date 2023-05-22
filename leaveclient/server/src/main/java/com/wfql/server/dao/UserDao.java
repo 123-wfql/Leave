@@ -6,7 +6,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 
 import com.wfql.server.entity.User;
@@ -33,7 +35,7 @@ public interface UserDao {
     int update(User... users);
 
     @Query("SELECT * FROM User")
-    List<User> queryAll();
+    Cursor queryAll();
 
     @Query("SELECT * FROM User WHERE userId=:userId ORDER BY userId DESC limit 1")
     User queryByUserId(String userId);
@@ -43,6 +45,12 @@ public interface UserDao {
 
     @Query("SELECT * FROM User WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
     Cursor query(String selection, String[] selectionArgs, String sortOrder);
+
+    @RawQuery
+    Cursor queryByExecSql(SupportSQLiteQuery query);
+
+    @RawQuery
+    int deleteByExecSql(SupportSQLiteQuery query);
 
 
 }

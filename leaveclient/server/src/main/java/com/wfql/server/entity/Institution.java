@@ -3,17 +3,17 @@ package com.wfql.server.entity;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = UserType.class,
+@Entity/*(foreignKeys = @ForeignKey(entity = UserType.class,
         parentColumns = "userType",
         childColumns = "userType",
         onDelete = ForeignKey.CASCADE,
-        onUpdate = ForeignKey.CASCADE))
+        onUpdate = ForeignKey.CASCADE))*/
 public class Institution {
     @PrimaryKey@NonNull
     private String institution;
-    private String insHeaderId;
     private String userType;
 
     public String getInstitution() {
@@ -24,13 +24,6 @@ public class Institution {
         this.institution = institution;
     }
 
-    public String getInsHeaderId() {
-        return insHeaderId;
-    }
-
-    public void setInsHeaderId(String insHeaderId) {
-        this.insHeaderId = insHeaderId;
-    }
 
     public String getUserType() {
         return userType;
@@ -44,7 +37,6 @@ public class Institution {
     public String toString() {
         return "Institution{" +
                 "institution='" + institution + '\'' +
-                ", insHeaderId='" + insHeaderId + '\'' +
                 ", userType='" + userType + '\'' +
                 '}';
     }

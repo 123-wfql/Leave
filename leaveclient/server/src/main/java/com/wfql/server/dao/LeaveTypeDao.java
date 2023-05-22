@@ -6,7 +6,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 
 import com.wfql.server.entity.LeaveType;
@@ -33,7 +35,7 @@ public interface LeaveTypeDao {
     int update(LeaveType... leaveTypes);
 
     @Query("SELECT * FROM LeaveType")
-    List<LeaveType> queryAll();
+    Cursor queryAll();
 
     @Query("SELECT * FROM LeaveType WHERE leaveType=:leaveType ORDER BY leaveType DESC limit 1")
     LeaveType queryByLeaveType(String leaveType);
@@ -43,6 +45,12 @@ public interface LeaveTypeDao {
 
     @Query("SELECT * FROM LeaveType WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
     Cursor query(String selection, String[] selectionArgs, String sortOrder);
+
+    @RawQuery
+    Cursor queryByExecSql(SupportSQLiteQuery query);
+
+    @RawQuery
+    int deleteByExecSql(SupportSQLiteQuery query);
 
 
 }

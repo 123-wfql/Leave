@@ -2,7 +2,6 @@ package com.wfql.client.entity;
 
 public class Department {
     private String department;
-    private String depHeaderId;
     private String institution;
 
     public String getDepartment() {
@@ -11,14 +10,6 @@ public class Department {
 
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    public String getDepHeaderId() {
-        return depHeaderId;
-    }
-
-    public void setDepHeaderId(String depHeaderId) {
-        this.depHeaderId = depHeaderId;
     }
 
     public String getInstitution() {
@@ -33,7 +24,6 @@ public class Department {
     public String toString() {
         return "Department{" +
                 "department='" + department + '\'' +
-                ", depHeaderId='" + depHeaderId + '\'' +
                 ", institution='" + institution + '\'' +
                 '}';
     }

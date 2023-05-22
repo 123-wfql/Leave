@@ -6,7 +6,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.wfql.server.entity.Admin;
 
@@ -32,7 +34,7 @@ public interface AdminDao {
     int update(Admin... admins);
 
     @Query("SELECT * FROM Admin")
-    List<Admin> queryAll();
+    Cursor queryAll();
 
     @Query("SELECT * FROM Admin WHERE adminId=:adminId ORDER BY adminId DESC limit 1")
     Admin queryByAdminId(String adminId);
@@ -42,6 +44,12 @@ public interface AdminDao {
 
     @Query("SELECT * FROM Admin WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
     Cursor query(String selection, String[] selectionArgs, String sortOrder);
+
+    @RawQuery
+    Cursor queryByExecSql(SupportSQLiteQuery query);
+
+    @RawQuery
+    int deleteByExecSql(SupportSQLiteQuery query);
 
 
 }

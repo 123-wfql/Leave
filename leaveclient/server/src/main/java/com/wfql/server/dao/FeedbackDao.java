@@ -6,7 +6,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.wfql.server.entity.Feedback;
 
@@ -32,7 +34,7 @@ public interface FeedbackDao {
     int update(Feedback... feedbacks);
 
     @Query("SELECT * FROM Feedback")
-    List<Feedback> queryAll();
+    Cursor queryAll();
 
     @Query("SELECT * FROM Feedback WHERE feedbackId=:feedbackId ORDER BY feedbackId DESC limit 1")
     Feedback queryByFeedbackId(String feedbackId);
@@ -42,6 +44,12 @@ public interface FeedbackDao {
 
     @Query("SELECT * FROM Feedback WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
     Cursor query(String selection, String[] selectionArgs, String sortOrder);
+
+    @RawQuery
+    Cursor queryByExecSql(SupportSQLiteQuery query);
+
+    @RawQuery
+    int deleteByExecSql(SupportSQLiteQuery query);
 
 
 }

@@ -8,16 +8,16 @@ import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 
-public class clientApplication extends Application {
+public class ClientApplication extends Application {
 
-    private static clientApplication mApp;
+    private static ClientApplication mApp;
 
     //声明映射对象，当前全局变量使用
     public HashMap<String, String> infoMap = new HashMap<>();
 
 
 
-    public static clientApplication getInstance(){
+    public static ClientApplication getInstance(){
         return mApp;
     }
 

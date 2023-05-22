@@ -9,10 +9,8 @@ import androidx.core.content.res.ResourcesCompat;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -38,12 +36,17 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.wfql.client.R;
+import com.wfql.client.content.DepartmentContent;
+import com.wfql.client.content.InstitutionContent;
 import com.wfql.client.content.LoginContent;
-import com.wfql.client.entity.Login;
+import com.wfql.client.content.UserContent;
+import com.wfql.client.util.TextWatcherUtil;
 import com.wfql.client.util.YNAlertDialogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, View.OnFocusChangeListener, AdapterView.OnItemSelectedListener, View.OnTouchListener {
     private AutoCompleteTextView et_login_userid;
@@ -81,6 +84,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // 设置文本变化监听器
         setTextChangeListeners();
 
+
+
+
+
         //返回结果
         register = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -99,6 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void setTextChangeListeners() {
         et_login_userid.addTextChangedListener(new CodeTextWatcher(et_login_userid, 11));
+        et_login_userid.addTextChangedListener(new TextWatcherUtil(et_login_userid, 11));
         et_login_pwd.addTextChangedListener(new CodeTextWatcher(et_login_pwd, 18));
     }
 
@@ -153,6 +161,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         et_login_userid.setSelection(0);
         setLoginInfoById(et_login_userid.getText().toString());
+
+        Intent intent = getIntent();
+        Class<?> sourceActivityClass = (Class<?>) intent.getSerializableExtra("sourceActivity");
+        if (sourceActivityClass == RegisterActivity.class) {
+            et_login_userid.setText(intent.getStringExtra("userId"));
+            et_login_pwd.setText(intent.getStringExtra("userPwd"));
+        }
+
+
     }
 
     private void setListeners() {
@@ -231,13 +248,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         int id = view.getId();
         if(id == R.id.btn_login){ //点击“登录”
-            loginId = et_login_userid.getText().toString();
-            loginPwd = et_login_pwd.getText().toString();
-            remember = ck_remember_pwd.isChecked();
-            // TODO: BCrypt to record pwd
-            successLogin();
+            if(checkLogin()){
+                Log.d("check", "校验密码成功");
+                if(recordLogin()){
+                    Log.d("record", "记录登录信息成功");
+                    if(recordUserToApp()){
+                        successLogin();
+                    }
 
+                }
 
+            } else {
+                Log.d("check", "校验密码失败");
+                Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+            }
 
         } else if(id == R.id.btn_register){ //点击“注册”
             Intent intentRegister = new Intent(this, RegisterActivity.class);
@@ -308,15 +332,117 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private boolean recordUserToApp() {
+        Uri uri = Uri.parse(UserContent.CONTENT_URI_SQL + "");
+        Cursor cursor = getContentResolver().query(uri, null, "userId=?", new String[]{loginId}, null);
+        if (cursor != null && cursor.getCount() > 0) {
+            //获取各个属性
+            cursor.moveToFirst();
+            int userIdColumnIndex = cursor.getColumnIndexOrThrow("userId");
+            int userNameColumnIndex = cursor.getColumnIndexOrThrow("userName");
+            int verifyPhoneColumnIndex = cursor.getColumnIndexOrThrow("verifyPhone");
+            int userGenderColumnIndex = cursor.getColumnIndexOrThrow("userGender");
+            int enterYearColumnIndex = cursor.getColumnIndexOrThrow("enterYear");
+            int iconUrlColumnIndex = cursor.getColumnIndexOrThrow("iconUrl");
+            int checkerLvColumnIndex = cursor.getColumnIndexOrThrow("checkerLv");
+            int userRemarkColumnIndex = cursor.getColumnIndexOrThrow("userRemark");
+            int departmentColumnIndex = cursor.getColumnIndexOrThrow("department");
+            int governLvColumnIndex = cursor.getColumnIndexOrThrow("governLv");
+            int jobColumnIndex = cursor.getColumnIndexOrThrow("job");
+            String userId = cursor.getString(userIdColumnIndex);
+            String userName = cursor.getString(userNameColumnIndex);
+            String verifyPhone = cursor.getString(verifyPhoneColumnIndex);
+            String userGender = cursor.getString(userGenderColumnIndex);
+            int enterYear = cursor.getInt(enterYearColumnIndex);
+            String iconUrl = cursor.getString(iconUrlColumnIndex);
+            int checkerLv = cursor.getInt(checkerLvColumnIndex);
+            String userRemark = cursor.getString(userRemarkColumnIndex);
+            String department = cursor.getString(departmentColumnIndex);
+            int governLv = cursor.getInt(governLvColumnIndex);
+            String job = cursor.getString(jobColumnIndex);
+            cursor.close();
+            //根据部门级信息查找机构及用户类型
+            String institution = "";
+            String userType = "";
+            Uri uriDep = Uri.parse(DepartmentContent.CONTENT_URI_SQL + "");
+            Cursor cursorDep = getContentResolver().query(uriDep, null, "department=?", new String[]{department}, null);
+            cursorDep.moveToFirst();
+            if (cursorDep != null && cursorDep.getCount() > 0){
+                int institutionColumnIndex = cursorDep.getColumnIndexOrThrow("institution");
+                institution = cursorDep.getString(institutionColumnIndex);
+            }
+            cursorDep.close();
+            Uri uriIns = Uri.parse(InstitutionContent.CONTENT_URI_SQL + "");
+            Cursor cursorIns = getContentResolver().query(uriIns, null, "institution=?", new String[]{institution}, null);
+            cursorIns.moveToFirst();
+            if (cursorIns != null && cursorIns.getCount() > 0){
+                int userTypeColumnIndex = cursorIns.getColumnIndexOrThrow("userType");
+                userType = cursorIns.getString(userTypeColumnIndex);
+            }
+            cursorIns.close();
+            //将属性打包到app的全局变量
+            ClientApplication clientApplication = ClientApplication.getInstance();
+            clientApplication.infoMap.put("userId", userId);
+            clientApplication.infoMap.put("userName", userName);
+            clientApplication.infoMap.put("verifyPhone", verifyPhone);
+            clientApplication.infoMap.put("userGender", userGender);
+            clientApplication.infoMap.put("enterYear", Integer.toString(enterYear));
+            clientApplication.infoMap.put("iconUrl", iconUrl);
+            clientApplication.infoMap.put("checkerLv", Integer.toString(checkerLv));
+            clientApplication.infoMap.put("userRemark", userRemark);
+            clientApplication.infoMap.put("department", department);
+            clientApplication.infoMap.put("governLv", Integer.toString(governLv));
+            clientApplication.infoMap.put("job", job);
+            clientApplication.infoMap.put("institution", institution);
+            clientApplication.infoMap.put("userType", userType);
+
+        } else {
+            Toast.makeText(LoginActivity.this, "找不到该账号", Toast.LENGTH_SHORT).show();
+            cursor.close();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkLogin() {
+        loginId = et_login_userid.getText().toString();
+        loginPwd = et_login_pwd.getText().toString();
+        remember = ck_remember_pwd.isChecked();
+        String userPwd = "";
+        Uri uri = Uri.parse(UserContent.CONTENT_URI_SQL + "");
+        Cursor cursor = getContentResolver().query(uri, null, "userId=?", new String[]{loginId}, null);
+        if (cursor != null && cursor.getCount() > 0) {
+            Log.d("check", "cursor is not null");
+            cursor.moveToFirst();
+            int userPwdColumnIndex = cursor.getColumnIndexOrThrow("userPwd");
+            userPwd = cursor.getString(userPwdColumnIndex);
+            Log.d("check", userPwd);
+        } else {
+            Toast.makeText(LoginActivity.this, "找不到该账号", Toast.LENGTH_SHORT).show();
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        if (BCrypt.verifyer().verify(loginPwd.toCharArray(), userPwd).verified) {
+            Log.d("check", "is same");
+            return true;
+        } else {
+            Toast.makeText(this, "账号或密码错误", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+
+
+    }
+
     private void successLogin() {
-        recordLogin();
         Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
-        Intent intentMain = new Intent(this, AskLeaveActivity.class);
+        Intent intentMain = new Intent(this, MainActivity.class);
         startActivity(intentMain);
     }
 
     //登录成功
-    private void recordLogin() {
+    private boolean recordLogin() {
 //        //使用共享参数
 //        SharedPreferences.Editor editor = pref_login.edit();
 //        editor.putString("loginId", et_login_userid.getText().toString());
@@ -331,6 +457,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         int deleteColumn = getContentResolver().delete(uri, "loginId=?", new String[]{loginId});
         uri = Uri.parse(LoginContent.CONTENT_URI_TABLE);
         getContentResolver().insert(uri, values);
+        return true;
 
     }
 

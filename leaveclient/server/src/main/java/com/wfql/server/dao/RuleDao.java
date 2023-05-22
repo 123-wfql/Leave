@@ -6,7 +6,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.wfql.server.entity.Rule;
 
@@ -32,7 +34,7 @@ public interface RuleDao {
     int update(Rule... rules);
 
     @Query("SELECT * FROM Rule")
-    List<Rule> queryAll();
+    Cursor queryAll();
 
     @Query("SELECT * FROM Rule WHERE ruleId=:ruleId ORDER BY ruleId DESC limit 1")
     Rule queryByRuleId(String ruleId);
@@ -42,6 +44,12 @@ public interface RuleDao {
 
     @Query("SELECT * FROM Rule WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
     Cursor query(String selection, String[] selectionArgs, String sortOrder);
+
+    @RawQuery
+    Cursor queryByExecSql(SupportSQLiteQuery query);
+
+    @RawQuery
+    int deleteByExecSql(SupportSQLiteQuery query);
 
 
 }

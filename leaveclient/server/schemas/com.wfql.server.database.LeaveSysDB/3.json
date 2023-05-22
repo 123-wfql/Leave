@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "637cadea2da47511cc4b090bca685fd9",
+    "version": 3,
+    "identityHash": "001b2ac77affd92a4c8492414a1f9ea0",
     "entities": [
       {
         "tableName": "Login",
@@ -88,13 +88,19 @@
       },
       {
         "tableName": "Department",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`department` TEXT NOT NULL, `institution` TEXT, PRIMARY KEY(`department`), FOREIGN KEY(`institution`) REFERENCES `Institution`(`institution`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`department` TEXT NOT NULL, `depHeaderId` TEXT, `institution` TEXT, PRIMARY KEY(`department`), FOREIGN KEY(`institution`) REFERENCES `Institution`(`institution`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "department",
             "columnName": "department",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "depHeaderId",
+            "columnName": "depHeaderId",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "institution",
@@ -176,13 +182,19 @@
       },
       {
         "tableName": "Institution",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`institution` TEXT NOT NULL, `userType` TEXT, PRIMARY KEY(`institution`), FOREIGN KEY(`userType`) REFERENCES `UserType`(`userType`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`institution` TEXT NOT NULL, `insHeaderId` TEXT, `userType` TEXT, PRIMARY KEY(`institution`), FOREIGN KEY(`userType`) REFERENCES `UserType`(`userType`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "institution",
             "columnName": "institution",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "insHeaderId",
+            "columnName": "insHeaderId",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "userType",
@@ -578,7 +590,7 @@
       },
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `userPwd` TEXT, `userName` TEXT, `verifyPhone` TEXT, `userGender` TEXT, `enterYear` INTEGER NOT NULL, `iconUrl` TEXT, `checkerLv` INTEGER NOT NULL, `userRemark` TEXT, `depName` TEXT, `governLv` INTEGER NOT NULL, `job` TEXT, PRIMARY KEY(`userId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `userPwd` TEXT, `userName` TEXT, `verifyPhone` INTEGER NOT NULL, `userGender` TEXT, `enterYear` INTEGER NOT NULL, `iconUrl` TEXT, `checkerLv` INTEGER NOT NULL, `userRemark` TEXT, `depName` TEXT, `governLv` INTEGER NOT NULL, `job` TEXT, PRIMARY KEY(`userId`))",
         "fields": [
           {
             "fieldPath": "userId",
@@ -601,8 +613,8 @@
           {
             "fieldPath": "verifyPhone",
             "columnName": "verifyPhone",
-            "affinity": "TEXT",
-            "notNull": false
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "userGender",
@@ -664,13 +676,19 @@
       },
       {
         "tableName": "UserType",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userType` TEXT NOT NULL, `institutionTitle` TEXT, `departmentTitle` TEXT, `idTag` TEXT, PRIMARY KEY(`userType`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userType` TEXT NOT NULL, `utHeaderId` TEXT, `institutionTitle` TEXT, `departmentTitle` TEXT, PRIMARY KEY(`userType`))",
         "fields": [
           {
             "fieldPath": "userType",
             "columnName": "userType",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "utHeaderId",
+            "columnName": "utHeaderId",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "institutionTitle",
@@ -681,12 +699,6 @@
           {
             "fieldPath": "departmentTitle",
             "columnName": "departmentTitle",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "idTag",
-            "columnName": "idTag",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -704,7 +716,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '637cadea2da47511cc4b090bca685fd9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '001b2ac77affd92a4c8492414a1f9ea0')"
     ]
   }
 }

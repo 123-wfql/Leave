@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "637cadea2da47511cc4b090bca685fd9",
+    "version": 1,
+    "identityHash": "a8a497b5bd42870a108cd0d1afa9b691",
     "entities": [
       {
         "tableName": "Login",
@@ -87,46 +87,34 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Department",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`department` TEXT NOT NULL, `institution` TEXT, PRIMARY KEY(`department`), FOREIGN KEY(`institution`) REFERENCES `Institution`(`institution`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "tableName": "Institution",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`institution` TEXT NOT NULL, `userType` TEXT, PRIMARY KEY(`institution`))",
         "fields": [
           {
-            "fieldPath": "department",
-            "columnName": "department",
+            "fieldPath": "institution",
+            "columnName": "institution",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "institution",
-            "columnName": "institution",
+            "fieldPath": "userType",
+            "columnName": "userType",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "department"
+            "institution"
           ],
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "Institution",
-            "onDelete": "CASCADE",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "institution"
-            ],
-            "referencedColumns": [
-              "institution"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
         "tableName": "Feedback",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`feedbackId` INTEGER NOT NULL, `fbContent` TEXT, `fbPeriod` INTEGER NOT NULL, `fbAuthorId` TEXT, PRIMARY KEY(`feedbackId`), FOREIGN KEY(`fbAuthorId`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`feedbackId` INTEGER NOT NULL, `fbContent` TEXT, `fbPeriod` INTEGER NOT NULL, `fbAuthorId` TEXT, PRIMARY KEY(`feedbackId`))",
         "fields": [
           {
             "fieldPath": "feedbackId",
@@ -160,61 +148,37 @@
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "User",
-            "onDelete": "NO ACTION",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "fbAuthorId"
-            ],
-            "referencedColumns": [
-              "userId"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
-        "tableName": "Institution",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`institution` TEXT NOT NULL, `userType` TEXT, PRIMARY KEY(`institution`), FOREIGN KEY(`userType`) REFERENCES `UserType`(`userType`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "tableName": "Department",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`department` TEXT NOT NULL, `institution` TEXT, PRIMARY KEY(`department`))",
         "fields": [
           {
-            "fieldPath": "institution",
-            "columnName": "institution",
+            "fieldPath": "department",
+            "columnName": "department",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "userType",
-            "columnName": "userType",
+            "fieldPath": "institution",
+            "columnName": "institution",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "institution"
+            "department"
           ],
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "UserType",
-            "onDelete": "CASCADE",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "userType"
-            ],
-            "referencedColumns": [
-              "userType"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
         "tableName": "Leave",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`leaveId` INTEGER NOT NULL, `userId` TEXT, `periodStart` INTEGER NOT NULL, `periodEnd` INTEGER NOT NULL, `periodSubmit` INTEGER NOT NULL, `leaveType` TEXT, `leaveReason` TEXT, `destination` TEXT, `status` INTEGER NOT NULL, `finish` INTEGER NOT NULL, `urgent` INTEGER NOT NULL, `check1` TEXT, `check1Status` TEXT, `check1Reason` TEXT, `check1Period` INTEGER NOT NULL, `check2` TEXT, `check2Status` TEXT, `check2Reason` TEXT, `check2Period` INTEGER NOT NULL, `check3` TEXT, `check3Status` TEXT, `check3Reason` TEXT, `check3Period` INTEGER NOT NULL, `outCode` TEXT, `resumed` INTEGER NOT NULL, PRIMARY KEY(`leaveId`), FOREIGN KEY(`userId`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`check1`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`check2`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`check3`) REFERENCES `User`(`userId`) ON UPDATE CASCADE ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`leaveId` INTEGER NOT NULL, `userId` TEXT, `periodStart` INTEGER NOT NULL, `periodEnd` INTEGER NOT NULL, `periodSubmit` INTEGER NOT NULL, `leaveType` TEXT, `leaveReason` TEXT, `destination` TEXT, `status` INTEGER NOT NULL, `finish` INTEGER NOT NULL, `urgent` INTEGER NOT NULL, `check1` TEXT, `check1Status` TEXT, `check1Reason` TEXT, `check1Period` INTEGER NOT NULL, `check2` TEXT, `check2Status` TEXT, `check2Reason` TEXT, `check2Period` INTEGER NOT NULL, `check3` TEXT, `check3Status` TEXT, `check3Reason` TEXT, `check3Period` INTEGER NOT NULL, `outCode` TEXT, `resumed` INTEGER NOT NULL, PRIMARY KEY(`leaveId`))",
         "fields": [
           {
             "fieldPath": "leaveId",
@@ -374,52 +338,7 @@
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "User",
-            "onDelete": "NO ACTION",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "userId"
-            ],
-            "referencedColumns": [
-              "userId"
-            ]
-          },
-          {
-            "table": "User",
-            "onDelete": "NO ACTION",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "check1"
-            ],
-            "referencedColumns": [
-              "userId"
-            ]
-          },
-          {
-            "table": "User",
-            "onDelete": "NO ACTION",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "check2"
-            ],
-            "referencedColumns": [
-              "userId"
-            ]
-          },
-          {
-            "table": "User",
-            "onDelete": "NO ACTION",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "check3"
-            ],
-            "referencedColumns": [
-              "userId"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
         "tableName": "LeaveType",
@@ -449,7 +368,7 @@
       },
       {
         "tableName": "News",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`newsId` INTEGER NOT NULL, `newsContent` TEXT, `newsPeriod` INTEGER NOT NULL, `newsAuthorId` TEXT, PRIMARY KEY(`newsId`), FOREIGN KEY(`newsAuthorId`) REFERENCES `Admin`(`adminId`) ON UPDATE CASCADE ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`newsId` INTEGER NOT NULL, `newsContent` TEXT, `newsPeriod` INTEGER NOT NULL, `newsAuthorId` TEXT, PRIMARY KEY(`newsId`))",
         "fields": [
           {
             "fieldPath": "newsId",
@@ -483,23 +402,11 @@
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "Admin",
-            "onDelete": "NO ACTION",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "newsAuthorId"
-            ],
-            "referencedColumns": [
-              "adminId"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
         "tableName": "Rule",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ruleId` INTEGER NOT NULL, `userType` TEXT, `leaveType` TEXT, `urgent` INTEGER NOT NULL, `needCheck1` INTEGER NOT NULL, `needCheck2` INTEGER NOT NULL, `needCheck3` INTEGER NOT NULL, PRIMARY KEY(`ruleId`), FOREIGN KEY(`userType`) REFERENCES `UserType`(`userType`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`leaveType`) REFERENCES `LeaveType`(`leaveType`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ruleId` INTEGER NOT NULL, `userType` TEXT, `leaveType` TEXT, `urgent` INTEGER NOT NULL, `needCheck1` INTEGER NOT NULL, `needCheck2` INTEGER NOT NULL, `needCheck3` INTEGER NOT NULL, PRIMARY KEY(`ruleId`))",
         "fields": [
           {
             "fieldPath": "ruleId",
@@ -551,34 +458,11 @@
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "UserType",
-            "onDelete": "CASCADE",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "userType"
-            ],
-            "referencedColumns": [
-              "userType"
-            ]
-          },
-          {
-            "table": "LeaveType",
-            "onDelete": "CASCADE",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "leaveType"
-            ],
-            "referencedColumns": [
-              "leaveType"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `userPwd` TEXT, `userName` TEXT, `verifyPhone` TEXT, `userGender` TEXT, `enterYear` INTEGER NOT NULL, `iconUrl` TEXT, `checkerLv` INTEGER NOT NULL, `userRemark` TEXT, `depName` TEXT, `governLv` INTEGER NOT NULL, `job` TEXT, PRIMARY KEY(`userId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `userPwd` TEXT, `userName` TEXT, `verifyPhone` TEXT, `userGender` TEXT, `enterYear` INTEGER NOT NULL, `iconUrl` TEXT, `checkerLv` INTEGER NOT NULL, `userRemark` TEXT, `department` TEXT, `governLv` INTEGER NOT NULL, `job` TEXT, PRIMARY KEY(`userId`))",
         "fields": [
           {
             "fieldPath": "userId",
@@ -635,8 +519,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "depName",
-            "columnName": "depName",
+            "fieldPath": "department",
+            "columnName": "department",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -704,7 +588,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '637cadea2da47511cc4b090bca685fd9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a8a497b5bd42870a108cd0d1afa9b691')"
     ]
   }
 }

@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = {
+@Entity/*(foreignKeys = {
         @ForeignKey(entity = UserType.class,
                 parentColumns = "userType",
                 childColumns = "userType",
@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey;
                 childColumns = "leaveType",
                 onDelete = ForeignKey.CASCADE,
                 onUpdate = ForeignKey.CASCADE)
-})
+})*/
 public class Rule {
     @PrimaryKey@NonNull
     private int ruleId;

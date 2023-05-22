@@ -6,7 +6,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.wfql.server.entity.Institution;
 
@@ -32,7 +34,7 @@ public interface InstitutionDao {
     int update(Institution... institutions);
 
     @Query("SELECT * FROM Institution")
-    List<Institution> queryAll();
+    Cursor queryAll();
 
     @Query("SELECT * FROM Institution WHERE institution=:institution ORDER BY institution DESC limit 1")
     Institution queryByInstitution(String institution);
@@ -42,6 +44,12 @@ public interface InstitutionDao {
 
     @Query("SELECT * FROM Institution WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
     Cursor query(String selection, String[] selectionArgs, String sortOrder);
+
+    @RawQuery
+    Cursor queryByExecSql(SupportSQLiteQuery query);
+
+    @RawQuery
+    int deleteByExecSql(SupportSQLiteQuery query);
 
 
 }

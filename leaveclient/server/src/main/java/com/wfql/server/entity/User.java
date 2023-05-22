@@ -11,13 +11,57 @@ public class User {
     private String userId;
     private String userPwd;
     private String userName;
-    private long verifyPhone;
+    private String verifyPhone;
     private String userGender;
     private int enterYear;
     private String iconUrl;
-    private boolean checker;
+    private int checkerLv;
     private String userRemark;
-    private String depName;
+    private String department;
+    private int governLv;
+    private String job;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", userPwd='" + userPwd + '\'' +
+                ", userName='" + userName + '\'' +
+                ", verifyPhone=" + verifyPhone +
+                ", userGender='" + userGender + '\'' +
+                ", enterYear=" + enterYear +
+                ", iconUrl='" + iconUrl + '\'' +
+                ", checkerLv=" + checkerLv +
+                ", userRemark='" + userRemark + '\'' +
+                ", department='" + department + '\'' +
+                ", governLv=" + governLv +
+                ", job='" + job + '\'' +
+                '}';
+    }
+
+    public int getCheckerLv() {
+        return checkerLv;
+    }
+
+    public void setCheckerLv(int checkerLv) {
+        this.checkerLv = checkerLv;
+    }
+
+    public int getGovernLv() {
+        return governLv;
+    }
+
+    public void setGovernLv(int governLv) {
+        this.governLv = governLv;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
 
     public String getUserId() {
         return userId;
@@ -43,11 +87,11 @@ public class User {
         this.userName = userName;
     }
 
-    public long getVerifyPhone() {
+    public String getVerifyPhone() {
         return verifyPhone;
     }
 
-    public void setVerifyPhone(long verifyPhone) {
+    public void setVerifyPhone(String verifyPhone) {
         this.verifyPhone = verifyPhone;
     }
 
@@ -75,14 +119,6 @@ public class User {
         this.iconUrl = iconUrl;
     }
 
-    public boolean isChecker() {
-        return checker;
-    }
-
-    public void setChecker(boolean checker) {
-        this.checker = checker;
-    }
-
     public String getUserRemark() {
         return userRemark;
     }
@@ -91,27 +127,12 @@ public class User {
         this.userRemark = userRemark;
     }
 
-    public String getDepName() {
-        return depName;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setDepName(String depName) {
-        this.depName = depName;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId='" + userId + '\'' +
-                ", userPwd='" + userPwd + '\'' +
-                ", userName='" + userName + '\'' +
-                ", verifyPhone=" + verifyPhone +
-                ", userGender='" + userGender + '\'' +
-                ", enterYear=" + enterYear +
-                ", iconUrl='" + iconUrl + '\'' +
-                ", checker=" + checker +
-                ", userRemark='" + userRemark + '\'' +
-                ", depName='" + depName + '\'' +
-                '}';
-    }
 }

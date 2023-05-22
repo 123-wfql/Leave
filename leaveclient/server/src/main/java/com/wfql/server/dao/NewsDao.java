@@ -6,7 +6,9 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 
 import com.wfql.server.entity.News;
@@ -33,7 +35,7 @@ public interface NewsDao {
     int update(News... news);
 
     @Query("SELECT * FROM News")
-    List<News> queryAll();
+    Cursor queryAll();
 
     @Query("SELECT * FROM News WHERE newsId=:newsId ORDER BY newsId DESC limit 1")
     News queryByNewsId(String newsId);
@@ -43,6 +45,12 @@ public interface NewsDao {
 
     @Query("SELECT * FROM news WHERE :selection=:selectionArgs ORDER BY :sortOrder DESC")
     Cursor query(String selection, String[] selectionArgs, String sortOrder);
+
+    @RawQuery
+    Cursor queryByExecSql(SupportSQLiteQuery query);
+
+    @RawQuery
+    int deleteByExecSql(SupportSQLiteQuery query);
 
 
 }

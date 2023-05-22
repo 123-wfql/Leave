@@ -10,14 +10,14 @@ import androidx.room.Room;
 import com.wfql.server.dao.LoginDao;
 import com.wfql.server.database.LeaveSysDB;
 
-public class serverApplication extends Application {
+public class ServerApplication extends Application {
 
-    private static serverApplication mApp;
+    private static ServerApplication mApp;
 
     private LeaveSysDB loginDatabase;
     private static LoginDao loginDao;
 
-    public static serverApplication getInstance(){
+    public static ServerApplication getInstance(){
         return mApp;
     }
 
@@ -46,7 +46,7 @@ public class serverApplication extends Application {
     public static LeaveSysDB getLoginDatabaseInstance() {
         LeaveSysDB loginDatabaseInstance = getInstance().getLoginDatabase();
         if (loginDatabaseInstance == null) {
-            synchronized (serverApplication.class) {
+            synchronized (ServerApplication.class) {
                 loginDatabaseInstance = getInstance().getLoginDatabase();
                 if (loginDatabaseInstance == null) {
                     loginDatabaseInstance = Room.databaseBuilder(getInstance(), LeaveSysDB.class, "Login")
